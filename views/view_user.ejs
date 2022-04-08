@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%-include('include/_header')%>
+  <title></title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<main id="site-main">
+    <div class="container">
+        <div class="box-nav d-flex justify-content">
+            <div class="filter">
+                <a href="/"><i class="bi bi-chevron-double-left"></i>All user</a><br/><br/>
+            </div>
+        </div>
+    </div>
+
+
+<body>
+<div class="container">
+  <div class="card " style="width: 100%; " >
+    <div class="card" style="justify-content: center;">
+    <div class="card-header bg-primary" style="text-align: center;"><b> User Information </b></div>
+
+    <table class="table table-condensed">
+        <tbody>
+            <td>1</td>
+            <td><b> Nama Lengkap </b></td>
+            <td>=</td>
+            <td><%= user.nama %></td>
+        </tbody>
+
+        <tbody>
+            <td>2</td>
+            <td><b> Suhu </b></td>
+            <td>=</td>
+            <td><%= user.suhu %> derajat</td>
+        </tbody>
+
+        <tbody>
+            <td>3</td>
+            <td><b> Jenis Kelamin</b></td>
+            <td>=</td>
+            <td><%= user.jeniskelamin %></td>
+        </tbody>
+
+        <tbody>
+            <td>4</td>
+            <td><b> Usia </b></td>
+            <td>=</td>
+            <td><%= user.usia %> Tahun</td>
+        </tbody>
+
+        <tbody>
+            <td>5</td>
+            <td><b> Tanggal Lahir </b></td>
+            <td>=</td>
+            <td><%= newDate %></td>
+        </tbody>
+
+        <tbody>
+            <td>6</td>
+            <td><b> No. KTP </b></td>
+            <td>=</td>
+            <td><%= user.noktp %></td>
+        </tbody>
+
+        <tbody>
+            <td>7</td>
+            <td><b> No HP </b></td>
+            <td>=</td>
+            <td><%= user.nohp %></td>
+        </tbody>
+
+        <tbody>
+            <td>8</td>
+            <td><b> Alamat </b></td>
+            <td>=</td>
+            <td><%= user.alamat %></td>
+        </tbody>
+
+        <tbody>
+            <td>9</td>
+            <td><b> E-Mail </b></td>
+            <td>=</td>
+            <td><%= user.email %></td>
+        </tbody>
+    
+        <tbody>
+            <td>10</td>
+            <td><b> Keluhan </b></td>
+            <td>=</td>
+            <td><%= user.keluhan %></td>
+        </tbody>
+
+        <tbody>
+            <td>11</td>
+            <td><b> Penyakit Penyerta </b></td>
+            <td>=</td>
+            <td><%= user.penyakit %></td>
+        </tbody>
+
+        <tbody>
+            <td>12</td>
+            <td><b> Hasil SWAB </b></td>
+            <td>=</td>
+            <td><%= user.hasil %></td>
+        </tbody>
+
+    </table>
+  </div>
+  </div>
+</div>
+</body>
+
+</main>
+</html>

@@ -1,0 +1,162 @@
+<!--include header-->
+<%-include('include/_header')%>
+<!--/include header-->
+
+    <!--Main site-->
+    <main id="site-main">
+        <div class="container">
+            <div class="box-nav d-flex justify-content">
+                <div class="filter">
+                    <a href="/"><i class="fa-solid fa-angles-left"></i>All user</a>
+                </div>
+            </div>
+        </div>
+        <div class="form-title text-center">
+            <h2 class="text-dark">Update User</h2>
+            <span class="text-light">Use the below form to Update an account</span>
+        </div>
+        <!--form handling-->
+        <form action="/api/users/<%= user._id %>" method = "POST" id="update_user">
+            <div class="new_user">
+                <div class="form-group">
+                <label for="">Nama :</label>
+                <input type="hidden" name="id" value="<%= user._id %>">
+                <input type="text" name="nama" value="<%= user.nama %>" placeholder="username">
+              </div>
+              <div class="form-group">
+                <label for="">Suhu Badan :</label>
+                <input type="number" name="suhu" value="<%= user.suhu %>" >
+            </div>
+  
+              <div class="form-group">
+                <label for="">TTL :</label>
+                <input type="date" name="TTL" value="<%= newDate %>">
+            </div>
+            <div class="form-group">
+              <label for="">Usia :</label>
+              <input type="number" name="usia" value="<%= user.usia %>" >
+          </div>
+            <div class="form-group">
+            <label for="">Jenis Kelamin : </label>
+              <input type="radio" name="jeniskelamin" value="Laki-Laki" <%= user.jeniskelamin == 'Laki-Laki'?'checked' : '' %> >
+              <label class="radio inline" >Laki - Laki</label>
+              <input type="radio" name="jeniskelamin" value="Perempuan" <%= user.jeniskelamin == 'Perempuan'?'checked' : '' %> >
+              <label class="radio inline">Perempuan</label>
+            </div>
+            <div class="form-group">
+                <label for="">No ktp :</label>
+                <input type="number" name="noktp" value="<%= user.noktp %>">
+            </div>
+            <div class="form-group">
+                <label for="">Alamat :</label>
+                <input type="text" name="alamat" value="<%= user.alamat %>">
+            </div>
+
+            <div class="form-group">
+                <label for="">No Hp :</label>
+                <input type="number" name="nohp" value="<%= user.nohp %>">
+            </div>
+
+            <div class="form-group">
+                <label for="">Email :</label>
+                <input type="text" name="email" value="<%= user.email %>">
+            </div>
+
+            <div class="form-group">
+              <label for="keluhan">Keluhan : </label>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Batuk" <%= user.keluhan.includes('Batuk') ? 'checked' : '' %>>
+                  <label for="keluhan">Batuk</label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Pilek" <%= user.keluhan.includes('Pilek') ? 'checked' : '' %>>
+                  <label for="keluhan">Pilek</label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Sakit Tenggorokan" <%= user.keluhan.includes('Sakit Tenggorokan') ? 'checked' : '' %>>
+                  <label for="keluhan">Sakit Tenggorokan</label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Sesak" <%= user.keluhan.includes('Sesak') ? 'checked' : '' %>>
+                  <label for="keluhan">Sesak</label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Menggigil" <%= user.keluhan.includes('Menggigil') ? 'checked' : '' %>>
+                  <label for="keluhan">Menggigil</label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Pusing" <%= user.keluhan.includes('Pusing') ? 'checked' : '' %>>
+                  <label for="keluhan">Pusing </label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Mual" <%= user.keluhan.includes('Mual') ? 'checked' : '' %>>
+                  <label for="keluhan">Mual</label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Muntah" <%= user.keluhan.includes('Muntah') ? 'checked' : '' %>>
+                  <label for="keluhan">Muntah</label>
+              </div>
+              <div class="checkbox inline">
+                  <input type="checkbox" name="keluhan" value="Diare" <%= user.keluhan.includes('Diare') ? 'checked' : '' %>>
+                  <label for="keluhan">Diare</label>
+              </div>
+          </div>
+            
+          <div class="form-group">
+            <label for="penyakit">Penyakit Penyerta : </label>
+            <div class="checkbox inline">
+                <input type="checkbox" name="penyakit" value="Diabetes" <%= user.penyakit.includes('Diabetes') ? 'checked' : '' %>>
+                <label for="penyakit">Diabetes</label>
+            </div>
+            <div class="checkbox inline">
+                <input type="checkbox" name="penyakit" value="Jantung" <%= user.penyakit.includes('Jantung') ? 'checked' : '' %>>
+                <label for="penyakit">Jantung</label>
+            </div>
+            <div class="checkbox inline">
+                <input type="checkbox" name="penyakit" value="Hipertensi" <%= user.penyakit.includes('Hipertensi') ? 'checked' : '' %>>
+                <label for="penyakit">Hipertensi</label>
+            </div>
+            <div class="checkbox inline">
+                <input type="checkbox" name="penyakit" value="Ginjal" <%= user.penyakit.includes('Ginjal') ? 'checked' : '' %>>
+                <label for="penyakit">Ginjal</label>
+            </div>
+            <div class="checkbox inline">
+                <input type="checkbox" name="penyakit" value="Keganasan" <%= user.penyakit.includes('Keganasan') ? 'checked' : '' %>>
+                <label for="penyakit">Keganasan</label>
+            </div>
+            <div class="checkbox inline">
+                <input type="checkbox" name="penyakit" value="PPOK" <%= user.penyakit.includes('PPOK') ? 'checked' : '' %>>
+                <label for="penyakit" >PPOK</label>
+            </div>  
+            <div class="checkbox inline">
+                <input type="checkbox" name="penyakit" value="Lainnya" <%= user.penyakit.includes('Lainnya') ? 'checked' : '' %>>
+                <label for="penyakit" >Lainnya</label>
+            </div>                
+        </div>
+    
+            <div class="form-group">
+              <label for="">Hasil Swab TEST = </label>
+                <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
+                <label class="radio inline">POSITIF </label>
+
+                <input type="radio" name="hasil" value="negatif" <%= user.hasil == 'negatif'?'checked' : '' %>>
+                <label class="radio inline">NEGATIF </label>
+
+                <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
+                <label class="radio inline">INVALID </label>
+            </div>
+       
+            <div class="form-group">
+                <button type="submit" class="btn txt-dark update">SAVE</button>
+            </div>
+            
+        </div>    
+        </form>
+        <!--/form handling-->
+
+    </main>    
+    <!--/Main site-->
+
+<!--include footer-->
+<%-include('include/_footer')%>
+<!--/include footer-->
