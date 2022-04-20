@@ -28,12 +28,13 @@ var schema = new mongoose.Schema({
     },
     email:{
         type:String,
-        require:true,
-        unique:true
+        require:true
     },
     keluhan:Array,
     penyakit:Array,
-    hasil:String
+    hasil:String,    
+    tanggaldaftar:Date
+
 
 })
 

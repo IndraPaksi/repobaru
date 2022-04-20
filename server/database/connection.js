@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-dotenv.config({path:'./views/config.env'})
+dotenv.config()
 
 
 const connectDB = async()=>{

@@ -156,11 +156,15 @@ padding: .5em 0;
 }
 
 #update_user .form-group,
+#login .form-group,
+#newFormConsent .form-group,
 #add_user .form-group{
     margin: .4em 0;
 }
-#update_user .form-group input[type="text"],
-#add_user .form-group input[type="text"]{
+#update_user .form-group input[type="text"], input[type="email"],
+#login .form-group input[type="text"], input[type="email"], input[type="password"],
+#newFormConsent .form-group input[type="text"], input[type="email"],
+#add_user .form-group input[type="text"], input[type="email"]{
     width: 100%;
     padding: .5em 1em;
     margin: .5em 0;
@@ -171,6 +175,7 @@ padding: .5em 0;
 }
 
 #update_user .form-group input[type="number"],
+#newFormConsent .form-group input[type="number"],
 #add_user .form-group input[type="number"]{
     width: 100%;
     padding: .5em 1em;
@@ -182,6 +187,7 @@ padding: .5em 0;
 }
 
 #update_user .form-group input[type="date"],
+#newFormConsent .form-group input[type="date"],
 #add_user .form-group input[type="date"]{
     width: 100%;
     padding: .5em 1em;
@@ -194,18 +200,22 @@ padding: .5em 0;
 
 
 #update_user .form-group .radio,
+#newFormConsent .form-group .radio,
 #add_user .form-group .radio{
     margin: .5em 1em;
 }
 
 
 #update_user .form-group .checkbox,
+#newFormConsent .form-group .checkbox,
 #add_user .form-group .checkbox{
     margin: .5em 1em;
 }
 
 
 #update_user .form-group .btn,
+#login .form-group .btn,
+#newFormConsent .form-group .btn,
 #add_user .form-group .btn{
     width: 100%;
     padding: 1em 1em;
@@ -219,8 +229,17 @@ padding: .5em 0;
 }
 
 #update_user .form-group .btn:hover,
+#newFormConsent .form-group .btn:hover,
 #add_user .form-group .btn:hover{
     background-color: var(--dark);
     color: var(--border);
 }
 
+.btn.btn-success{
+    padding: .2em 4em;
+    width: 25%;
+    background-color: #008000;
+    border-radius: 25px;
+    
+    
+}

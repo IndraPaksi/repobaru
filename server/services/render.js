@@ -12,8 +12,11 @@ module.exports = {
         })
     
     },
+    newFormConsent(req,res){
+        res.render('new', { captcha: res.recaptcha });
+    },
     add_user(req,res){
-        res.render('add_user');
+        res.render('add_user', { captcha: res.recaptcha });
     },
     update_user(req, res){
         console.log('id>>>', req.query.id)
