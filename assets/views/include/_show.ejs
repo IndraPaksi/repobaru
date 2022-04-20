@@ -1,0 +1,60 @@
+<% for (var i = 0; i<users.length; i++){ %>
+
+<tr>
+    <td><%= i+1 %></td>
+    <td><%= users[i].nama %></td>
+    <td><%= users[i].suhu %></td>
+    <td><%= users[i].TTL %></td>
+    <td><%= users[i].usia %></td>
+    <td><%= users[i].jeniskelamin %></td>
+    <td><%= users[i].noktp %></td>
+    <td><%= users[i].alamat %></td>
+    <td><%= users[i].nohp %></td>
+    <td><%= users[i].email %></td>
+    <td><%= users[i].keluhan %></td>
+    <td><%= users[i].penyakit %></td>
+    <td><%= users[i].hasil %></td>
+    <td><%= users[i].tanggaldaftar %></td>
+    <td>
+
+        <a href= "/update-user?id=<%= users[i]._id %>" class="btn border-shadow update">
+            <span class="text-gradient"><i class="">update</i></span>
+        </a>
+
+        <a href= "/view-user?id=<%= users[i]._id %>" class="btn border-shadow update">
+            <span class="text-gradient"><i class="">Detail</i></span>
+        </a>
+
+        <a href="#" class="btn border-shadow delete" onclick="deleteUser('<%= users[i]._id %>');" >
+            <span class="t  ext-gradient"><i class="">delete</i></span>
+        </a>
+
+        <a href= "/api/export/users/<%= users[i]._id %>" class="btn border-shadow update">
+            <span class="text-gradient"><i class="">Export</i></span>
+        </a>
+
+
+    </td>
+</tr>
+
+<% } %>
+
+<script>
+function deleteUser(id) {
+    if (confirm("Are you sure want to delete?") == true) {
+        
+        fetch(`/api/users/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+}
+</script>
