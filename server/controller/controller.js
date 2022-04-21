@@ -163,11 +163,17 @@ module.exports = {
     },
 
     loginPage(req,res){
-
-        if (req.session.isLogin) {
-            res.redirect('/');
-        } else {
-            res.render('login')
+        const myemail = 'admin@admin.com'
+        const mypassword = 'admin123'
+        
+        if(req.body.email == myemail && req.body.password == mypassword){
+            session=req.session;
+            session.isLogin=req.body.email;
+            console.log(req.session)
+            res.redirect ('/');
+        }
+        else{
+            res.send('Invalid email or password');
         }
     },
 

@@ -17,8 +17,11 @@ route.get('/new', recaptcha.middleware.render, services.newFormConsent);
 
 route.get('/update-user', controller.updatePage);
 route.get('/view-user', controller.viewPage);
-route.get('/login', controller.loginPage);
 
+route.post('/login', controller.loginPage);
+route.get('/login', (req, res, next) => {
+    res.render('login');
+});
 
 route.post('/api/users', recaptcha.middleware.verify, controller.create);
 route.get('/api/users', controller.find);
