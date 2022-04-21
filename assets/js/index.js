@@ -24,6 +24,14 @@ $("#add_user").submit(function (e) {
 });
 
 
+$('#loginButton').submit(function(e){
+    const url = '/api/usersLogin/'
+    $.getJSON(url, function(respone){
+        console.log(respone)
+            
+    });
+});
+
 
 $("#update_user").submit(function (event) {
     event.preventDefault();

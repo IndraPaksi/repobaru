@@ -26,7 +26,7 @@ route.get('/api/users/:id',controller.findById);
 route.post('/api/users/:id',controller.update);
 route.delete('/api/users/:id',controller.delete);
 route.get('/api/usersByEmail/:email',controller.findUserDoclink);
-//route.get('/api/usersLogin', controller.login)
+route.get('/api/usersLogin', controller.login)
 
 route.get('/api/export/users.xlsx', exportExcel.get_data);
 route.get('/api/export/users/:id', exportExcel.getDataOne);

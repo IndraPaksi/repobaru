@@ -5,9 +5,6 @@ const moment = require('moment');
 const { application } = require('express');
 const { getMaxListeners } = require('../model/model');
 
-const email = 'admin@gmail.com';
-const password = 'admin123'; 
-var session;
 
 
 module.exports = {
@@ -172,7 +169,21 @@ module.exports = {
         } else {
             res.render('login')
         }
+    },
+
+    login(req,res){
+        const myusername = 'admin'
+        const mypassword = 'admin123'
+
+        if(req.body.username == myusername && req.body.password == mypassword){
+            session=req.session;
+            session.isLogin=req.body.username;
+            console.log(req.session)
+            res.redirect ('/');
+        }
+        else{
+            res.send('Invalid username or password');
+        }
     }
-
-
+    
 }
