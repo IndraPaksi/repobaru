@@ -5,9 +5,7 @@ const moment = require('moment');
 const { application } = require('express');
 const { getMaxListeners } = require('../model/model');
 const Users = require('../model/model');
-const UsersModel = require('../model/model');
 const { render } = require('express/lib/response');
-
 
 
 module.exports = {
@@ -15,10 +13,10 @@ module.exports = {
         if (req.session.isLogin) {
             Userdb.find()
                 .then(users => {
-                    res.render('index',{users});
+                    res.render('index', { users });
                 })
                 .catch(err => {
-                    res.render('index',{users:[]});
+                    res.render('index', { users: [] });
                     // res.status(500).send({ message: err.message || "Error" })
                 })
         } else {
@@ -26,24 +24,34 @@ module.exports = {
         }
     },
     updatePage(req, res) {
-        console.log('id >>>', req.query.id)
-        Userdb.findById(req.query.id).then(user => {
-            const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-            res.render("update_user",{user, newDate:newDate})
-        }).catch(error => {
-            res.render("update_user",{user: {}, newDate: ''})
-            // res.status(404).send({ message: error.message || "User not found" })
-        })
-        
+        if (req.session.isLogin) {
+            console.log('id >>>', req.query.id)
+            Userdb.findById(req.query.id).then(user => {
+                const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
+                res.render("update_user", { user, newDate: newDate })
+            }).catch(error => {
+                res.render("update_user", { user: {}, newDate: '' })
+                // res.status(404).send({ message: error.message || "User not found" })
+            })
+        } else {
+            res.redirect('/login')
+        }
+
     },
     viewPage(req, res) {
-        Userdb.findById(req.query.id).then(user => {
-            const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-            res.render("view_user",{user, newDate:newDate})
-        }).catch(error => {
-            res.render("view_user",{user: {}, newDate: ''})
-            // res.status(404).send({ message: error.message || "User not found" })
-        })
+        if (req.session.isLogin) {
+
+            Userdb.findById(req.query.id).then(user => {
+                const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
+                res.render("view_user", { user, newDate: newDate })
+            }).catch(error => {
+                res.render("view_user", { user: {}, newDate: '' })
+                // res.status(404).send({ message: error.message || "User not found" })
+            })
+        } else {
+            res.redirect('/login')
+        }
+
     },
     create(req, res) {
         if (req.recaptcha.error) {
@@ -76,7 +84,7 @@ module.exports = {
         user
             .save(user)
             .then(data => {
-                res.status(201).send({message:"Data Successfully added!", data})
+                res.status(201).send({ message: "Data Successfully added!", data })
                 // res.redirect("/")
             })
             .catch(err => {
@@ -165,58 +173,16 @@ module.exports = {
 
     },
 
-    loginPage(req,res){
-        const myemail = 'admin@admin.com'
-        const mypassword = 'admin123'
-        
-        if(req.body.email == myemail && req.body.password == mypassword){
-            session=req.session;
-            session.isLogin=req.body.email;
+    loginPage(req, res) {
+        const myemail = 'admin@admin.com' , mypassword = 'admin123' , role = 'Operator'
+        if (req.body.email == myemail && req.body.password == mypassword) {
+            session = req.session;
+            session.isLogin = true;
+            session.role = "Operator";
             console.log(req.session)
-            res.redirect ('/');
-        }
-        else{
+            res.redirect('/');
+        }else{
             res.send('Invalid email or password');
         }
-    },
-
-    login(req,res){
-        const myusername = 'admin'
-        const mypassword = 'admin123'
-
-        if(req.body.username == myusername && req.body.password == mypassword){
-            session=req.session;
-            session.isLogin=req.body.username;
-            console.log(req.session)
-            res.redirect ('/');
-        }
-        else{
-            res.send('Invalid username or password');
-        }
-    },
-    
-    validation(req) {
-        if (req.email == UsersModel.email && req.password == UsersModel.password) {
-            return true
-        } else {
-            return false
-        }
-    },
-
-    getTemplateByRole(req, res) {
-        if (req.role == 'ANALIS') {
-            res.render('viewAnalis',{users});
-        } else if (req.role == 'OPERATOR') {
-            res.render('viewOperator',{users});
-        }
-    },
-
-    Login(req) {
-        if (validation(req)) {
-            render(getTemplateByRole(req.role))
-        } else {
-            render('Invalid User / Password')
-        }
     }
-    
 }

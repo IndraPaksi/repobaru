@@ -133,7 +133,8 @@
                 <label for="penyakit" >Lainnya</label>
             </div>                
         </div>
-    
+        <% if (role == "Analis") { %>
+            
             <div class="form-group">
               <label for="">Hasil Swab TEST = </label>
                 <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
@@ -145,7 +146,12 @@
                 <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
                 <label class="radio inline">INVALID </label>
             </div>
-       
+
+            <% }else if(role == 'Operator') { %>
+               Hasil SWAB TEST  = <%= user.hasil %>
+            
+            <% } %>
+   
             <div class="form-group">
                 <button type="submit" class="btn txt-dark update">SAVE</button>
             </div>
