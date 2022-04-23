@@ -38,6 +38,27 @@ var schema = new mongoose.Schema({
 
 })
 
+var UserSchema = new mongoose.Schema({
+    username: {
+        type:String
+    },
+    password: {
+        type:String
+    },
+    email: {
+        type:String
+    },
+    role: {
+        type:['ANALIS', 'OPERATOR']
+    },
+    active: {
+        type:Boolean
+    }
+})
+
 const Userdb = mongoose.model('userdb',schema);
 
+const UsersModel = mongoose.model('UserModel',UserSchema);
+
 module.exports = Userdb;
+module.exports = UsersModel;

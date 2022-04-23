@@ -4,6 +4,9 @@ const fetch = require('fetch');
 const moment = require('moment');
 const { application } = require('express');
 const { getMaxListeners } = require('../model/model');
+const Users = require('../model/model');
+const UsersModel = require('../model/model');
+const { render } = require('express/lib/response');
 
 
 
@@ -189,6 +192,30 @@ module.exports = {
         }
         else{
             res.send('Invalid username or password');
+        }
+    },
+    
+    validation(req) {
+        if (req.email == UsersModel.email && req.password == UsersModel.password) {
+            return true
+        } else {
+            return false
+        }
+    },
+
+    getTemplateByRole(req, res) {
+        if (req.role == 'ANALIS') {
+            res.render('viewAnalis',{users});
+        } else if (req.role == 'OPERATOR') {
+            res.render('viewOperator',{users});
+        }
+    },
+
+    Login(req) {
+        if (validation(req)) {
+            render(getTemplateByRole(req.role))
+        } else {
+            render('Invalid User / Password')
         }
     }
     
