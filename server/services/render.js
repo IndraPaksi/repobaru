@@ -26,7 +26,7 @@ module.exports = {
         .then(function(userdata){
             console.log('userdata', userdata)
             const newDate = moment(userdata.data.TTL).utc().format('YYYY-MM-DD')
-            res.render("update_user",{user:userdata.data, newDate:newDate})
+            res.render("update_user",{user:userdata.data, newDate:newDate, role: req.session.role})
         })
         .catch(err=>{
             res.send(err);
