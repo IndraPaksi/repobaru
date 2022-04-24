@@ -174,20 +174,19 @@ module.exports = {
     },
 
     loginPage(req, res) {
-        const myemail = 'admin@admin.com' , mypassword = 'admin123' , role = 'Operator'
-        var data = req.body;
-        
-        data.forEach(function (item) {
-            if (item.email == myemail && item.password == mypassword) {
+        // const myemail = 'admin@admin.com' , mypassword = 'admin123' , role = 'Operator'
+        datas = [['admin@admin.com', 'admin123', 'Operator'], ['analis@admin.com', 'admin123', 'Analis']]
+        for (var i = 0; i < datas.length; i++) {
+            console.log(req.body.email);
+            console.log(req.body.password);
+            if (req.body.email == datas[i][0] && req.body.password == datas[i][1]) {
                 session = req.session;
                 session.isLogin = true;
-                session.role = "Operator";
+                session.role = datas[i][2];
                 console.log(req.session)
                 res.redirect('/');
-            }else{
-                res.send('Invalid email or password');
             }
-        });
-        
+        }
+            res.send('Invalid email or password');
     }
 }
