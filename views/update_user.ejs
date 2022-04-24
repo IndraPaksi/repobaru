@@ -133,25 +133,24 @@
                 <label for="penyakit" >Lainnya</label>
             </div>                
         </div>
-        <% if (role == "Analis") { %>
-            
+        <% switch (role) {
+            case 'Analis' : %>
             <div class="form-group">
-              <label for="">Hasil Swab TEST = </label>
-                <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
-                <label class="radio inline">POSITIF </label>
-
-                <input type="radio" name="hasil" value="negatif" <%= user.hasil == 'negatif'?'checked' : '' %>>
-                <label class="radio inline">NEGATIF </label>
-
-                <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
-                <label class="radio inline">INVALID </label>
-            </div>
-
-            <% }else if(role == 'Operator') { %>
-               Hasil SWAB TEST  = <%= user.hasil %>
-            
-            <% } %>
-   
+                <label for="">Hasil Swab TEST = </label>
+                  <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
+                  <label class="radio inline">POSITIF </label>
+  
+                  <input type="radio" name="hasil" value="negatif" <%= user.hasil == 'negatif'?'checked' : '' %>>
+                  <label class="radio inline">NEGATIF </label>
+  
+                  <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
+                  <label class="radio inline">INVALID </label>
+              </div>
+              <% break;
+            case 'Operator' : %>
+              <p>Hasil SWAB TEST  = </p>  <%= user.hasil %>
+              <% break;
+        } %>
             <div class="form-group">
                 <button type="submit" class="btn txt-dark update">SAVE</button>
             </div>
