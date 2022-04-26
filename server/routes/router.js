@@ -22,6 +22,14 @@ route.post('/login', controller.loginPage);
 route.get('/login', (req, res, next) => {
     res.render('login');
 });
+route.get('/logout',(req,res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
+route.get('/register', (req, res, next) => {
+    res.render('register');
+});
+
 
 route.post('/api/users', recaptcha.middleware.verify, controller.create);
 route.get('/api/users', controller.find);
