@@ -17,53 +17,165 @@
         </div>
         <!--form handling-->
         <form action="/api/users/<%= user._id %>" method = "POST" id="update_user">
+            <div class="card " style="width: 75%; margin: auto; margin-top: 4em; " >
+            <table class="table table-condensed">
             <div class="new_user">
+                <% switch (role) {
+                    case 'Operator' : %>
                 <div class="form-group">
                 <label for="">Nama :</label>
                 <input type="hidden" name="id" value="<%= user._id %>">
                 <input type="text" name="nama" value="<%= user.nama %>" placeholder="username">
               </div>
-              <div class="form-group">
-                <label for="">Suhu Badan :</label>
-                <input type="number" name="suhu" value="<%= user.suhu %>" >
-            </div>
+              <% break;
+            case 'Analis' : %>
+            <tbody>
+                <td>Nama</td>
+                <td>=</td> 
+                <td><%= user.nama %> </td>
+             </tbody>
+              <% break;
+        } %>
   
+        <% switch (role) {
+            case 'Operator' : %>
+            <div class="form-group">
+                <label for="">Jenis Kelamin : </label>
+                  <input type="radio" name="jeniskelamin" value="Laki-Laki" <%= user.jeniskelamin == 'Laki-Laki'?'checked' : '' %> >
+                  <label class="radio inline" >Laki - Laki</label>
+                  <input type="radio" name="jeniskelamin" value="Perempuan" <%= user.jeniskelamin == 'Perempuan'?'checked' : '' %> >
+                  <label class="radio inline">Perempuan</label>
+                </div>
+                <% break;
+                case 'Analis' : %>
+                <tbody>
+                    <td>Jenis Kelamin</td>
+                    <td>  = </td> 
+                    <td><%= user.jeniskelamin %></td>
+                </tbody>
+                  <% break;
+                } %>
+
+                <% switch (role) {
+                    case 'Operator' : %>
               <div class="form-group">
-                <label for="">TTL :</label>
+                <label for="">Tempat Tanggal Lahir :</label>
                 <input type="date" name="TTL" value="<%= newDate %>">
             </div>
+              <% break;
+            case 'Analis' : %>
+            <tbody>
+              <td> Tempat Tanggal Lahir </td>
+              <td> = </td>
+              <td> <%= user.TTL %></td>
+            </tbody>
+              <% break;
+            } %>
+
+            <% switch (role) {
+                case 'Operator' : %>
             <div class="form-group">
               <label for="">Usia :</label>
               <input type="number" name="usia" value="<%= user.usia %>" >
           </div>
-            <div class="form-group">
-            <label for="">Jenis Kelamin : </label>
-              <input type="radio" name="jeniskelamin" value="Laki-Laki" <%= user.jeniskelamin == 'Laki-Laki'?'checked' : '' %> >
-              <label class="radio inline" >Laki - Laki</label>
-              <input type="radio" name="jeniskelamin" value="Perempuan" <%= user.jeniskelamin == 'Perempuan'?'checked' : '' %> >
-              <label class="radio inline">Perempuan</label>
-            </div>
+          <% break;
+          case 'Analis' : %>
+          <tbody>  
+           <td> Usia </td> 
+          <td> = </td> 
+          <td> <%= user.usia %></td>
+        </tbody>  
+          <% break;
+        } %>
+
+          <% switch (role) {
+            case 'Operator' : %>
             <div class="form-group">
                 <label for="">No ktp :</label>
                 <input type="number" name="noktp" value="<%= user.noktp %>">
             </div>
+            <% break;
+            case 'Analis' : %>
+            <tbody>
+             <td> No KTP </td>
+             <td> = </td>
+             <td> <%= user.noktp %></td>
+            </tbody>
+              <% break;
+            } %>
+
+            <% switch (role) {
+                case 'Operator' : %>
             <div class="form-group">
                 <label for="">Alamat :</label>
                 <input type="text" name="alamat" value="<%= user.alamat %>">
             </div>
+            <% break;
+            case 'Analis' : %>
+            <tbody>
+              <td> Alamat </td>
+              <td> = </td>
+              <td> <%= user.alamat %></td>
+            </tbody>
+              <% break;
+            } %>
 
+            <% switch (role) {
+                case 'Operator' : %>
             <div class="form-group">
                 <label for="">No Hp :</label>
                 <input type="number" name="nohp" value="<%= user.nohp %>">
             </div>
+            <% break;
+            case 'Analis' : %>
+            <tbody>
+             <td> NO HP </td>
+             <td> = </td>
+             <td> <%= user.nohp %> </td>
+            </tbody>
+              <% break;
+            } %>
 
+            <% switch (role) {
+                case 'Operator' : %>
             <div class="form-group">
                 <label for="">Email :</label>
                 <input type="email" name="email" value="<%= user.email %>">
             </div>
+            <% break;
+            case 'Analis' : %>
+            <tbody>
+             <td> EMAIL</td>
+             <td> = </td>
+             <td> <%= user.email %></td>
+            </tbody> 
+             <% break;
+            } %>
 
+            <% switch (role) {
+                case 'Operator' : %>
+            <div class="form-group">
+                <label for="">Suhu Badan :</label>
+                <input type="number" name="suhu" value="<%= user.suhu %>" >
+            </div>
+            <% break;
+            case 'Analis' : %>
+            <tbody>
+             <td> Suhu Badan </td>
+             <td> = </td>
+             <td> <%= user.suhu %> </td> 
+            </tbody>
+              <% break;
+            } %>
+
+            <% switch (role) {
+                case 'Operator' : %>
             <div class="form-group">
               <label for="keluhan">Keluhan : </label>
+              <div class="checkbox inline">
+                <input type="checkbox" name="keluhan" value="Demam" <%= user.keluhan.includes('Demam') ? 'checked' : '' %>>
+                <label for="keluhan">Demam</label>
+            </div>
               <div class="checkbox inline">
                   <input type="checkbox" name="keluhan" value="Batuk" <%= user.keluhan.includes('Batuk') ? 'checked' : '' %>>
                   <label for="keluhan">Batuk</label>
@@ -100,8 +212,24 @@
                   <input type="checkbox" name="keluhan" value="Diare" <%= user.keluhan.includes('Diare') ? 'checked' : '' %>>
                   <label for="keluhan">Diare</label>
               </div>
+
+              <div class="checkbox inline">
+                <input type="text" name="Lainnya" value="" placeholder="Lainnya">  
+            </div>
+              
           </div>
+          <% break;
+          case 'Analis' : %>
+          <tbody>
+           <td> Keluhan </td>
+           <td> = </td>
+           <td> <%= user.keluhan %></td>
+        </tbody>
+            <% break;
+        } %>
             
+          <% switch (role) {
+            case 'Operator' : %>
           <div class="form-group">
             <label for="penyakit">Penyakit Penyerta : </label>
             <div class="checkbox inline">
@@ -129,33 +257,49 @@
                 <label for="penyakit" >PPOK</label>
             </div>  
             <div class="checkbox inline">
-                <input type="checkbox" name="penyakit" value="Lainnya" <%= user.penyakit.includes('Lainnya') ? 'checked' : '' %>>
-                <label for="penyakit" >Lainnya</label>
-            </div>                
+              <input type="text" name="Lainnya" value="" placeholder="Lainnya">  
+          </div>
         </div>
+        <% break;
+        case 'Analis' : %>
+        <tbody>
+         <td> Penyakit Penyerta </td>
+         <td> = </td>
+         <td> <%= user.penyakit %></td>
+        </tbody>
+          <% break;
+        } %>
+
         <% switch (role) {
-            case 'Analis' : %>
+            case 'Analis' : %>     
+            
             <div class="form-group">
-                <label for="">Hasil Swab TEST = </label>
-                  <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
-                  <label class="radio inline">POSITIF </label>
-  
-                  <input type="radio" name="hasil" value="negatif" <%= user.hasil == 'negatif'?'checked' : '' %>>
-                  <label class="radio inline">NEGATIF </label>
-  
-                  <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
-                  <label class="radio inline">INVALID </label>
-              </div>
-              <% break;
+                <tbody>
+               <td> <label for="">Hasil Swab TEST <td> =</td> </label></td>
+               <td> <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
+               <label class="radio inline">POSITIF </label>
+
+                <input type="radio" name="hasil" value="negatif" <%= user.hasil == 'negatif'?'checked' : '' %>>
+                <label class="radio inline">NEGATIF </label>
+
+                <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
+                <label class="radio inline">INVALID </label></td>
+            </tbody>
+            </div>
+
+            <% break;
             case 'Operator' : %>
-              <p>Hasil SWAB TEST  = </p>  <%= user.hasil %>
+              <b>Hasil SWAB TEST  =  <%= user.hasil %> </b> 
               <% break;
         } %>
+
+    </table>
             <div class="form-group">
-                <button type="submit" class="btn txt-dark update">SAVE</button>
+               <button type="submit" class="btn txt-dark update">SAVE</button>
             </div>
-            
+        
         </div>    
+        
         </form>
         <!--/form handling-->
 
