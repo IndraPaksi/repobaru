@@ -163,6 +163,7 @@ padding: .5em 0;
 }
 #update_user .form-group input[type="text"], input[type="email"],
 #login .form-group input[type="text"], input[type="email"], input[type="password"],
+#register .form-group input[type="text"], input[type="username"], input[type="email"], input[type="password"],
 #newFormConsent .form-group input[type="text"], input[type="email"],
 #add_user .form-group input[type="text"], input[type="email"]{
     width: 100%;
