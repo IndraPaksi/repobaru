@@ -6,6 +6,7 @@ const { application } = require('express');
 const { getMaxListeners } = require('../model/model');
 const Users = require('../model/model');
 const { render } = require('express/lib/response');
+const userModelsCollection = require('../model/model');
 
 
 module.exports = {
@@ -188,5 +189,15 @@ module.exports = {
             }
         }
             res.send('Invalid email or password');
+    },
+
+    register(req, res) {
+        userModelsCollection.insertMany(req.body)
+        .then(data => {
+          res.send({
+            message: "Register Success"
+          })
+        })
+        .catch(error => console.error(error))
     }
 }

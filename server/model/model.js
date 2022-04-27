@@ -38,6 +38,23 @@ var schema = new mongoose.Schema({
 
 })
 
+var userModels = new mongoose.Schema({
+    email:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    role:{
+        type:String,
+        required:true
+    }
+})
+
 const Userdb = mongoose.model('userdb',schema);
+const userModelsCollection = mongoose.model('usermodels',userModels);
 
 module.exports = Userdb;
+module.exports = userModelsCollection;

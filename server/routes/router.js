@@ -19,6 +19,7 @@ route.get('/update-user', controller.updatePage);
 route.get('/view-user', controller.viewPage);
 
 route.post('/login', controller.loginPage);
+route.post('/register', controller.register);
 route.get('/login', (req, res, next) => {
     res.render('login');
 });
