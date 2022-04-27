@@ -56,5 +56,4 @@ var userModels = new mongoose.Schema({
 const Userdb = mongoose.model('userdb',schema);
 const userModelsCollection = mongoose.model('usermodels',userModels);
 
-module.exports = Userdb;
-module.exports = userModelsCollection;
+module.exports = { userdb: Userdb, userModels: userModelsCollection};

@@ -1,18 +1,17 @@
-var Userdb = require('../model/model');
+var { userdb } = require('../model/model');
 require('dotenv').config()
 const fetch = require('fetch');
 const moment = require('moment');
 const { application } = require('express');
 const { getMaxListeners } = require('../model/model');
-const Users = require('../model/model');
 const { render } = require('express/lib/response');
-const userModelsCollection = require('../model/model');
+var { userModels } = require('../model/model');
 
 
 module.exports = {
     home(req, res) {
         if (req.session.isLogin) {
-            Userdb.find()
+            userdb.find()
                 .then(users => {
                     res.render('index', { users });
                 })
@@ -27,7 +26,7 @@ module.exports = {
     updatePage(req, res) {
         if (req.session.isLogin) {
             console.log('id >>>', req.query.id)
-            Userdb.findById(req.query.id).then(user => {
+            userdb.findById(req.query.id).then(user => {
                 const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
                 res.render("update_user", { user, newDate: newDate, role: req.session.role })
             }).catch(error => {
@@ -42,7 +41,7 @@ module.exports = {
     viewPage(req, res) {
         if (req.session.isLogin) {
 
-            Userdb.findById(req.query.id).then(user => {
+            userdb.findById(req.query.id).then(user => {
                 const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
                 res.render("view_user", { user, newDate: newDate })
             }).catch(error => {
@@ -65,7 +64,7 @@ module.exports = {
             return;
         }
 
-        const user = new Userdb({
+        const user = new userdb({
             nama: req.body.nama,
             suhu: req.body.suhu,
             TTL: req.body.TTL,
@@ -95,7 +94,7 @@ module.exports = {
             });
     },
     find(req, res) {
-        Userdb.find()
+        userdb.find()
             .then(user => {
                 res.send(user)
             })
@@ -106,7 +105,7 @@ module.exports = {
 
     findById(req, res) {
         console.log('id >>>', req.params.id)
-        Userdb.findById(req.params.id).then(user => {
+        userdb.findById(req.params.id).then(user => {
             res.send(user)
 
         }).catch(error => {
@@ -142,7 +141,7 @@ module.exports = {
         }
         const id = req.params.id;
         console.log('data update', req.body)
-        Userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
             .then(data => {
                 res.redirect("/")
 
@@ -155,7 +154,7 @@ module.exports = {
     delete(req, res) {
         const id = req.params.id;
 
-        Userdb.findByIdAndDelete(id)
+        userdb.findByIdAndDelete(id)
             .then(data => {
                 if (!data) {
                     res.status(404).send({ message: `Cannot delete with id ${id}. wrong` })
@@ -175,7 +174,7 @@ module.exports = {
     },
 
     loginPage(req, res) {
-        userModelsCollection.find({
+        userModels.find({
           email: req.body.email,
           password: req.body.password
         })
@@ -193,7 +192,7 @@ module.exports = {
     },
 
     register(req, res) {
-        userModelsCollection.insertMany(req.body)
+        userModels.insertMany(req.body)
         .then(data => {
           res.send({
             message: "Register Success"
