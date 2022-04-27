@@ -175,20 +175,21 @@ module.exports = {
     },
 
     loginPage(req, res) {
-        // const myemail = 'admin@admin.com' , mypassword = 'admin123' , role = 'Operator'
-        datas = [['admin@admin.com', 'admin123', 'Operator'], ['analis@admin.com', 'admin123', 'Analis']]
-        for (var i = 0; i < datas.length; i++) {
-            console.log(req.body.email);
-            console.log(req.body.password);
-            if (req.body.email == datas[i][0] && req.body.password == datas[i][1]) {
-                session = req.session;
-                session.isLogin = true;
-                session.role = datas[i][2];
-                console.log(req.session)
-                res.redirect('/');
-            }
-        }
-            res.send('Invalid email or password');
+        userModelsCollection.find({
+          email: req.body.email,
+          password: req.body.password
+        })
+        .then(data => {
+          if (req.body.email == data[0].email && req.body.password == data[0].password) {
+              session = req.session;
+              session.isLogin = true;
+              session.role = data[0].role;
+              res.redirect('/');
+          }
+        })
+        .catch(error => {
+          res.send('Invalid email or password');
+        });
     },
 
     register(req, res) {
