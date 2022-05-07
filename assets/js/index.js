@@ -18,20 +18,32 @@ $("#add_user").submit(function (e) {
         error: function (obj) {
             console.log('error', obj.responseText)
             const msg = JSON.parse(obj.responseText)
-            alert(`Error ${msg.message} `);
+            alert(` ${msg.message} `);
         }
     });
 });
 
-
-$('#loginButton').submit(function(e){
-    const url = '/api/usersLogin/'
-    $.getJSON(url, function(respone){
-        console.log(respone)
-            
+$("#newFormConsent").submit(function (e) {
+    e.preventDefault()
+    const url = e.currentTarget.action
+    $.ajax({
+        url: url,
+        type: 'post',
+        dataType: 'application/json',
+        data: $("#newFormConsent").serialize(),
+        success: function (data) {
+            const msg = JSON.parse(obj.responseText)
+            console.log('data', msg)
+            alert(msg.message);
+            window.top.location = `/view-user?id=${msg.data._id}`
+        },
+        error: function (obj) {
+            console.log('error', obj.responseText)
+            const msg = JSON.parse(obj.responseText)
+            alert(` ${msg.message} `);
+        }
     });
 });
-
 
 $("#update_user").submit(function (event) {
     event.preventDefault();
@@ -130,5 +142,3 @@ $('#searchButton').click(function (e) {
     })
     //alert('Enter' + $(this).val())
 })
-
-

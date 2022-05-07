@@ -5,7 +5,8 @@ module.exports = {
     homeRoutes(req,res){
         axios.get('http://localhost:3000/api/users')
         .then(function(respone){
-            res.render('index',{users: respone.data});
+            const newDate = moment(userdata.data.TTL,).utc().format('YYYY-MM-DD')
+            res.render('index',{users: respone.data, newDate:newDate});
         })
         .catch(err=>{
             res.send(err);

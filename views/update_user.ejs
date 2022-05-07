@@ -18,7 +18,7 @@
         <!--form handling-->
         <form action="/api/users/<%= user._id %>" method = "POST" id="update_user">
             <div class="card " style="width: 75%; margin: auto; margin-top: 4em; " >
-            <table class="table table-condensed">
+            <table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
             <div class="new_user">
                 <% switch (role) {
                     case 'Operator' : %>
@@ -254,7 +254,7 @@
             </div>
             <div class="checkbox inline">
                 <input type="checkbox" name="penyakit" value="PPOK" <%= user.penyakit.includes('PPOK') ? 'checked' : '' %>>
-                <label for="penyakit" >PPOK</label>
+                <label for="penyakit" >PPOK (Penyakit Paru Obstruktif Kronis)</label>
             </div>  
             <div class="checkbox inline">
               <input type="text" name="Lainnya" value="" placeholder="Lainnya">  
@@ -277,10 +277,10 @@
                 <tbody>
                <td> <label for="">Hasil Swab TEST <td> =</td> </label></td>
                <td> <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
-               <label class="radio inline">POSITIF </label>
+               <label class="radio inline">POSITIF </label><br>
 
                 <input type="radio" name="hasil" value="negatif" <%= user.hasil == 'negatif'?'checked' : '' %>>
-                <label class="radio inline">NEGATIF </label>
+                <label class="radio inline">NEGATIF </label><br>
 
                 <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
                 <label class="radio inline">INVALID </label></td>

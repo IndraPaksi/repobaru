@@ -5,27 +5,26 @@
                 <label for="">Nama :</label>
                   <input type="text" name="nama" class="form-control" required>
               </div>
+
               <div class="form-group">
-                <label for="">Suhu Badan :</label>
-                <input type="number" name="suhu" class="form-control" required>
-            </div>
-  
+                <label for="">Jenis Kelamin : </label>
+                <label class="radio inline" >
+                  <input type="radio" name="jeniskelamin" value="Laki-Laki"  required>Laki - Laki  
+                </label>
+                <label class="radio inline">
+                  <input type="radio" name="jeniskelamin" value="Perempuan"  required>Perempuan  
+                </label>
+                </div>
+
               <div class="form-group">
-                <label for="">TTL :
+                <label for="">Tempat Tanggal Lahir :
                 <input type="date" name="TTL" ></label>
             </div>
             <div class="form-group">
               <label for="">Usia :</label>
               <input type="number" name="usia" class="form-control" required>
           </div>
-            <div class="form-group">
-            <label for="">Jenis Kelamin : </label>
-            <label class="radio inline" >
-              <input type="radio" name="jeniskelamin" value="Laki-Laki"  required>Laki - Laki  
-            </label>
-            <label class="radio inline">
-              <input type="radio" name="jeniskelamin" value="Perempuan"  required>Perempuan  
-            </label>
+
 
             <div class="form-group">
                 <label for="">No ktp :</label>
@@ -37,53 +36,65 @@
             </div>
 
             <div class="form-group">
-                <label for="">No Hp :</label>
+                <label for="">No Handphone :</label>
                 <input type="number" name="nohp" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="">Email :</label>
                 <input type="email" name="email" class="form-control" required>
             </div>
-
             <div class="form-group">
-              <label for="keluhan">Keluhan : </label>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Batuk">
-                  <label for="keluhan">Batuk</label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Pilek">
-                  <label for="keluhan">Pilek</label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Sakit Tenggorokan">
-                  <label for="keluhan">Sakit Tenggorokan</label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Sesak">
-                  <label for="keluhan">Sesak</label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Menggigil">
-                  <label for="keluhan">Menggigil</label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Pusing">
-                  <label for="keluhan">Pusing </label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Mual">
-                  <label for="keluhan">Mual</label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Muntah">
-                  <label for="keluhan">Muntah</label>
-              </div>
-              <div class="checkbox inline">
-                  <input type="checkbox" name="keluhan" value="Diare">
-                  <label for="keluhan">Diare</label>
-              </div>
-          </div>
+                <label for="">Suhu Badan :</label>
+                <input type="number" name="suhu" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="keluhan">Keluhan : </label>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Demam">
+                    <label for="keluhan">Demam</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Batuk">
+                    <label for="keluhan">Batuk</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Pilek">
+                    <label for="keluhan">Pilek</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Sakit Tenggorokan">
+                    <label for="keluhan">Sakit Tenggorokan</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Sesak">
+                    <label for="keluhan">Sesak</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Menggigil">
+                    <label for="keluhan">Menggigil</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Pusing">
+                    <label for="keluhan">Pusing </label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Mual">
+                    <label for="keluhan">Mual</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Muntah">
+                    <label for="keluhan">Muntah</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Diare">
+                    <label for="keluhan">Diare</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="text" name="keluhan"  placeholder="Lainnya">
+                </div>
+                
+            </div>
           
             
           <div class="form-group">
@@ -110,22 +121,21 @@
             </div>
             <div class="checkbox inline">
                 <input type="checkbox" name="penyakit" value="PPOK">
-                <label for="penyakit" >PPOK</label>
+                <label for="penyakit" >PPOK (Penyakit Paru Obstruktif Kronis)</label>
             </div>  
             <div class="checkbox inline">
-                <input type="checkbox" name="penyakit" value="Lainnya">
-                <label for="penyakit" >Lainnya</label>
-            </div>                
+                <input type="text" name="keluhan"  placeholder="Lainnya">
+            </div>     
         </div>
     
             <div class="form-group">
-              <label for="">Hasil Swab TEST = </label>
+              <label for="">Hasil Swab TEST = </label><br>
               <label class="radio inline">
                 <input type="radio" name="hasil" value="positif" required>POSITIF 
-              </label>
+              </label><br>
               <label class="radio inline">
                 <input type="radio" name="hasil" value="negatif" required>NEGATIF 
-              </label>
+              </label><br>
               <label class="radio inline">
                 <input type="radio" name="hasil" value="invalid" required>INVALID 
               </label>

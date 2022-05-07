@@ -10,28 +10,15 @@
 
         <th>
             <a href="#"  class="btn border-shadow " id="searchButton">
-                <span class="text-gradient"><i class="fa-solid fa-magnifying-glass"> Search</i></span>
+                <span class="text-gradient"><i class="fa-solid fa-magnifying-glass"></i>Periksa Email</span>
             </a>
         </th>
 
         <div class="form-group">
-            <label for="">Nama :</label>
-            <input type="text" name="nama" class="form-control" required>
+            <label for="">Nama Lengkap :</label>
+            <input type="text" name="nama" class="form-control"  required>
         </div>
 
-        <div class="form-group">
-            <label for="">Suhu Badan :</label>
-            <input type="number" name="suhu" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="">TTL :
-                <input type="date" name="TTL"></label>
-        </div>
-        <div class="form-group">
-            <label for="">Usia :</label>
-            <input type="number" name="usia" class="form-control" required>
-        </div>
         <div class="form-group">
             <label for="">Jenis Kelamin : </label>
             <label class="radio inline">
@@ -40,24 +27,53 @@
             <label class="radio inline">
                 <input type="radio" name="jeniskelamin" value="Perempuan" required>Perempuan
             </label>
+        </div>
 
-            <div class="form-group">
-                <label for="">No ktp :</label>
-                <input type="number" name="noktp" class="form-control" required>
-            </div>
+        <div class="form-group">
+            <label for="">Tempat Tanggal Lahir :
+                <input type="date" name="TTL"required></label>
+        </div>
+        
+        <div class="form-group">
+            <label for="">Usia :</label>
+            <input type="number" name="usia" class="form-control" required>
+        </div>
+
+
+        <div class="form-group">
+                <label for="">No KTP :</label>
+                <input type="number" name="noktp" class="form-control" 
+                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type = "number"
+                maxlength = "16"
+                required>
+        </div>
             <div class="form-group">
                 <label for="">Alamat :</label>
                 <input type="text" name="alamat" class="form-control" required>
             </div>
 
             <div class="form-group">
-                <label for="">No Hp :</label>
-                <input type="number" name="nohp" class="form-control" required>
+                <label for="">No Handphone :</label>
+                <input type="number" name="nohp" class="form-control" 
+                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type = "number"
+                maxlength = "10"
+                 required>
             </div>
 
+            <div class="form-group">
+                <label for="">Suhu Badan :</label>
+                <input type="number" name="suhu" class="form-control" required>
+            </div>
+    
 
             <div class="form-group">
                 <label for="keluhan">Keluhan : </label>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Demam">
+                    <label for="keluhan">Demam</label>
+                </div>
                 <div class="checkbox inline">
                     <input type="checkbox" name="keluhan" value="Batuk">
                     <label for="keluhan">Batuk</label>
@@ -94,6 +110,10 @@
                     <input type="checkbox" name="keluhan" value="Diare">
                     <label for="keluhan">Diare</label>
                 </div>
+                <div class="checkbox inline">
+                    <input type="text" name="keluhan"  placeholder="Lainnya">
+                </div>
+                
             </div>
 
 
@@ -121,26 +141,19 @@
                 </div>
                 <div class="checkbox inline">
                     <input type="checkbox" name="penyakit" value="PPOK">
-                    <label for="penyakit">PPOK</label>
+                    <label for="penyakit">PPOK (Penyakit Paru Obstruktif Kronis)</label>
                 </div>
                 <div class="checkbox inline">
-                    <input type="checkbox" name="penyakit" value="Lainnya">
-                    <label for="penyakit">Lainnya</label>
+                    <input type="text" name="penyakit"  placeholder="Lainnya">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="">Hasil Swab TEST = </label>
-                <label class="radio inline">
-                    <input type="radio" name="hasil" value="positif" required>POSITIF
-                </label>
-                <label class="radio inline">
-                    <input type="radio" name="hasil" value="negatif" required>NEGATIF
-                </label>
-                <label class="radio inline">
-                    <input type="radio" name="hasil" value="invalid" required>INVALID
-                </label>
-            </div>
+                <label for="pernyataan"></label>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="pernyataan" required>
+                    <b>Saya menyatakan data yang disampaikan diatas adalah benar dan saya bersedia untuk dilakukan pemeriksaan Covid-19 dan dapat dipergunakan sebagaimana mestinya</b>
+                </div>
 
             <div class="form-group">
                 <%- captcha%>

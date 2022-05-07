@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
+    noregister:{
+        type:String
+    },
     nama:{
         type:String,
         required:true
@@ -35,8 +38,8 @@ var schema = new mongoose.Schema({
     hasil:String,    
     tanggaldaftar:Date
 
-
 })
+
 
 var userModels = new mongoose.Schema({
     email:{

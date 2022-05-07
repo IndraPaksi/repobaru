@@ -2,11 +2,9 @@ var { userdb } = require('../model/model');
 require('dotenv').config()
 const fetch = require('fetch');
 const moment = require('moment');
-const { application } = require('express');
 const { getMaxListeners } = require('../model/model');
-const { render } = require('express/lib/response');
-var { userModels } = require('../model/model');
-
+const { userModels } = require('../model/model');
+const autoCode = require('./autocode')
 
 module.exports = {
     home(req, res) {
@@ -54,6 +52,7 @@ module.exports = {
 
     },
     create(req, res) {
+
         if (req.recaptcha.error) {
             res.status(400).send({ message: req.recaptcha.error });
             return
@@ -64,34 +63,39 @@ module.exports = {
             return;
         }
 
-        const user = new userdb({
-            nama: req.body.nama,
-            suhu: req.body.suhu,
-            TTL: req.body.TTL,
-            usia: req.body.usia,
-            jeniskelamin: req.body.jeniskelamin,
-            noktp: req.body.noktp,
-            alamat: req.body.alamat,
-            nohp: req.body.nohp,
-            email: req.body.email,
-            keluhan: req.body.keluhan,
-            penyakit: req.body.penyakit,
-            hasil: req.body.hasil,
-            tanggaldaftar: moment.utc()
+        
+        autoCode.getCode('FC').then(code => {
+            const user = new userdb({
+                noregister: code,
+                nama: req.body.nama,
+                suhu: req.body.suhu,
+                TTL: req.body.TTL,
+                usia: req.body.usia,
+                jeniskelamin: req.body.jeniskelamin,
+                noktp: req.body.noktp,
+                alamat: req.body.alamat,
+                nohp: req.body.nohp,
+                email: req.body.email,
+                keluhan: req.body.keluhan,
+                penyakit: req.body.penyakit,
+                hasil: req.body.hasil,
+                tanggaldaftar: moment.utc()
 
-        })
-
-        user
-            .save(user)
-            .then(data => {
-                res.status(201).send({ message: "Data Successfully added!", data })
-                // res.redirect("/")
             })
-            .catch(err => {
-                res.status(500).send({
-                    message: err.message || "some error"
+            console.log(user)
+
+            user
+                .save(user)
+                .then(data => {
+                    res.status(201).send({ message: `Data Berhasil Ditambahkan, No Registrasi anda adalah = ${code}`, data})
+                    //res.redirect("/")
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: err.message || "some error"
+                    });
                 });
-            });
+        })
     },
     find(req, res) {
         userdb.find()
@@ -172,32 +176,33 @@ module.exports = {
             });
 
     },
-
     loginPage(req, res) {
         userModels.find({
-          email: req.body.email,
-          password: req.body.password
+            email: req.body.email,
+            password: req.body.password
         })
-        .then(data => {
-          if (req.body.email == data[0].email && req.body.password == data[0].password) {
-              session = req.session;
-              session.isLogin = true;
-              session.role = data[0].role;
-              res.redirect('/');
-          }
-        })
-        .catch(error => {
-          res.send('Invalid email or password');
-        });
+            .then(data => {
+                if (req.body.email == data[0].email && req.body.password == data[0].password) {
+                    session = req.session;
+                    session.isLogin = true;
+                    session.role = data[0].role;
+                    res.redirect('/');
+                }
+            })
+            .catch(error => {
+                res.send('Invalid email or password');
+            });
     },
 
     register(req, res) {
         userModels.insertMany(req.body)
-        .then(data => {
-          res.send({
-            message: "Register Success"
-          })
-        })
-        .catch(error => console.error(error))
+            .then(data => {
+                res.redirect('/login')
+            })
+            .catch(error => {
+                res.status(400).send({ message: "email or password cannot be empty" });
+            })
     }
+
+
 }
