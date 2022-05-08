@@ -4,7 +4,8 @@ const fetch = require('fetch');
 const moment = require('moment');
 const { getMaxListeners } = require('../model/model');
 const { userModels } = require('../model/model');
-const autoCode = require('./autocode')
+const autoCode = require('./autocode');
+var url = require('url');
 
 module.exports = {
     home(req, res) {
@@ -202,6 +203,18 @@ module.exports = {
             .catch(error => {
                 res.status(400).send({ message: "email or password cannot be empty" });
             })
+    },
+
+    findByNoRegis(req, res) {
+        var q = url.parse(req.url, true);
+
+        userdb.find({
+          noregister: q.query.keyword,
+        }).then(users => {
+          res.render('index', { users });
+        }).catch(error => {
+          res.status(404).send({ message: error.message || "Data not found" })
+        })
     }
 
 

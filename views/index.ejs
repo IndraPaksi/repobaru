@@ -4,58 +4,59 @@
 
     <!--Main site-->
     <main id="site-main">
+      <div>
         <div class="container">
-            
-            <div class="box-nav d-flex justify-content">
-                <div class="box">
-                    <div class="container-1">
-                        <span class="icon"><i class="fa fa-search"></i></span>
-                        <input type="search" id="search" placeholder="Search..." />
-                   
-                        <a href="/new" class="border-shadow">
-                    <span class="text-gradient">New Form Consent <i class="fa-solid fa-user"></i></span>
+          <div class="box-nav d-flex justify-content">
+            <div class="box">
+              <div class="container-1">
+                <form action="/search" method="GET">
+                  <span class="icon"><i class="fa fa-search"></i></span>
+                  <input type="search" id="search" name="keyword" placeholder="Search..." />
+                  <input type="submit">
+                </form>
+                
+                <a href="/new" class="border-shadow">
+                  <span class="text-gradient">New Form Consent <i class="fa-solid fa-user"></i></span>
                 </a>
 
                 <a href="http://localhost:3000/api/export/users.xlsx" class="border-shadow">
-                    <span class="text-gradient">Export ALL <i class="fa-solid fa-download"></i></span>
+                  <span class="text-gradient">Export ALL <i class="fa-solid fa-download"></i></span>
                 </a>
-                
+                  
                 <a href='/logout' class="border-shadow">
-                    <span class="text-gradient">Logout <i class="fa-solid fa-right-from-bracket"></i></span>
+                  <span class="text-gradient">Logout <i class="fa-solid fa-right-from-bracket"></i></span>
                 </a>
+              </div>
             </div>
-        </div>
-         
-            </div>
+          </div>
         </div>
 
 
         <!--form handling-->
         <form action="/"method = "POST">
-            <table class="table" style="margin-left:auto;margin-right:auto">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>No Registrasi</th>
-                        <th>Nama</th>
-                        <th>TTL</th>
-                        <th>Usia</th>
-                        <th>Jenis Kelamin</th>
-                        <th>No. KTP</th>
-                        <th>No HP</th>
-                        <th>Hasil SWAB</th>
-                        <th>tanggal Daftar</th>
-                        <th>action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   <%-include('include/_show')%>
-                </tbody>
+          <table class="table" style="margin-left:auto;margin-right:auto">
+              <thead class="thead-dark">
+                  <tr>
+                      <th>ID</th>
+                      <th>No Registrasi</th>
+                      <th>Nama</th>
+                      <th>TTL</th>
+                      <th>Usia</th>
+                      <th>Jenis Kelamin</th>
+                      <th>No. KTP</th>
+                      <th>No HP</th>
+                      <th>Hasil SWAB</th>
+                      <th>tanggal Daftar</th>
+                      <th>action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <%-include('include/_show')%>
+              </tbody>
 
-            </table>
+          </table>
         </form>
-  
-    </div>
+      </div>
     </main>    
     <!--/Main site-->
         

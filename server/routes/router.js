@@ -28,6 +28,7 @@ route.get('/logout',(req,res) => {
 route.get('/register', (req, res, next) => {
     res.render('register');
 });
+route.get('/search',controller.findByNoRegis);
 
 
 route.post('/api/users', recaptcha.middleware.verify, controller.create);
