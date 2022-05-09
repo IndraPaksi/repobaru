@@ -4,7 +4,7 @@ const fetch = require('fetch');
 const moment = require('moment');
 const { getMaxListeners } = require('../model/model');
 const { userModels } = require('../model/model');
-const autoCode = require('./autocode');
+const autoCode = require('./autocode')
 var url = require('url');
 
 module.exports = {
@@ -12,10 +12,14 @@ module.exports = {
         if (req.session.isLogin) {
             userdb.find()
                 .then(users => {
-                    res.render('index', { users });
+                    users.map((dt) => {
+                        dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
+                        dt['tanggaldaftarf'] = moment(dt.tanggaldaftar).utc().format('D MMMM YYYY')
+                    })
+                    res.render('index', { users, role: req.session.role });
                 })
                 .catch(err => {
-                    res.render('index', { users: [] });
+                    res.render('index', { users: [], role: req.session.role });
                     // res.status(500).send({ message: err.message || "Error" })
                 })
         } else {
@@ -50,6 +54,17 @@ module.exports = {
         } else {
             res.redirect('/login')
         }
+
+    },
+    
+    daftar(req, res) {
+            userdb.findById(req.query.id).then(user => {
+                const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
+                res.render("daftar", { user, newDate: newDate })
+            }).catch(error => {
+                res.render("daftar", { user: {}, newDate: '' })
+                // res.status(404).send({ message: error.message || "User not found" })
+            })
 
     },
     create(req, res) {
@@ -88,9 +103,14 @@ module.exports = {
             user
                 .save(user)
                 .then(data => {
-                    res.status(201).send({ message: `Data Berhasil Ditambahkan, No Registrasi anda adalah = ${code}`, data})
-                    //res.redirect("/")
+                    
+                    autoCode.updateMonthCode(moment().format('YYMM'),'FC')
+                    //res.status(201).send({ message: `Data Berhasil Ditambahkan, No Registrasi anda adalah = ${code}`, data})
+                    
+                    res.redirect("/daftar?id=<%= data._id %>")
+
                 })
+                
                 .catch(err => {
                     res.status(500).send({
                         message: err.message || "some error"
@@ -208,10 +228,17 @@ module.exports = {
     findByNoRegis(req, res) {
         var q = url.parse(req.url, true);
 
-        userdb.find({
-          noregister: q.query.keyword,
-        }).then(users => {
-          res.render('index', { users });
+        const cari = {$regex: `^.*${q.query.keyword}*.$`, $options:"i"}
+        const keyword = {
+            $or:[{
+                nama: cari
+            },{
+                noregister: cari
+            }]
+        }
+        console.log('keyword', keyword)
+        userdb.find(keyword).then(users => {
+          res.render('index', { users, role: req.session.role });
         }).catch(error => {
           res.status(404).send({ message: error.message || "Data not found" })
         })

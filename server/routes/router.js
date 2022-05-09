@@ -15,6 +15,7 @@ route.get('/new', recaptcha.middleware.render, services.newFormConsent);
 
 
 route.get('/update-user', controller.updatePage);
+route.get('/daftar', controller.daftar);
 route.get('/view-user', controller.viewPage);
 route.post('/login', controller.loginPage);
 route.post('/register', controller.register);
@@ -28,6 +29,7 @@ route.get('/logout',(req,res) => {
 route.get('/register', (req, res, next) => {
     res.render('register');
 });
+
 route.get('/search',controller.findByNoRegis);
 
 

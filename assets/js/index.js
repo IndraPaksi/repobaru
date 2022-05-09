@@ -1,49 +1,6 @@
 
 
 
-$("#add_user").submit(function (e) {
-    e.preventDefault()
-    const url = e.currentTarget.action
-    $.ajax({
-        url: url,
-        type: 'post',
-        dataType: 'application/json',
-        data: $("#add_user").serialize(),
-        success: function (data) {
-            const msg = JSON.parse(obj.responseText)
-            console.log('data', msg)
-            alert(msg.message);
-            window.top.location = `/view-user?id=${msg.data._id}`
-        },
-        error: function (obj) {
-            console.log('error', obj.responseText)
-            const msg = JSON.parse(obj.responseText)
-            alert(` ${msg.message} `);
-        }
-    });
-});
-
-$("#newFormConsent").submit(function (e) {
-    e.preventDefault()
-    const url = e.currentTarget.action
-    $.ajax({
-        url: url,
-        type: 'post',
-        dataType: 'application/json',
-        data: $("#newFormConsent").serialize(),
-        success: function (data) {
-            const msg = JSON.parse(obj.responseText)
-            console.log('data', msg)
-            alert(msg.message);
-            window.top.location = `/view-user?id=${msg.data._id}`
-        },
-        error: function (obj) {
-            console.log('error', obj.responseText)
-            const msg = JSON.parse(obj.responseText)
-            alert(` ${msg.message} `);
-        }
-    });
-});
 
 $("#update_user").submit(function (event) {
     event.preventDefault();
@@ -60,7 +17,7 @@ $("#update_user").submit(function (event) {
     }
 
     $.ajax(request).done(function (respone) {
-        alert("Data Updated");
+        alert("Data berhasil diperbarui");
     })
 })
 
@@ -76,9 +33,9 @@ if (window.location.pathname == "/") {
             "method": "DELETE",
         }
 
-        if (confirm("Are you sure want to delete ?")) {
+        if (confirm("Apakah kamu yakin mau menghapus data ini ?")) {
             $.ajax(request).done(function (respone) {
-                alert("Data deleted");
+                alert("Data terhapus");
                 location.reload();
             })
         }
@@ -97,7 +54,7 @@ $('#searchEmail').keypress(function (event) {
         $.getJSON(url, function (respone) {
             console.log(respone)
             if (respone.message) {
-                alert(respone.message)
+                alert("Kamu belum terdaftar, silahkan lengkapi data dibawah ini")
             } else {
                 $('[name=nama]').val(respone.namaDepan + ' ' + respone.namaBelakang)
                 $('[name=jeniskelamin]').val(respone.jeniskelamin)
@@ -123,7 +80,7 @@ $('#searchButton').click(function (e) {
     $.getJSON(url, function (respone) {
         console.log(respone)
         if (respone.message) {
-            alert(respone.message)
+            alert("Kamu belum terdaftar, silahkan lengkapi data dibawah ini")
         } else {
             $('[name=nama]').val(respone.namaDepan + ' ' + respone.namaBelakang)
             $('[name=jeniskelamin]').val(respone.jeniskelamin)
