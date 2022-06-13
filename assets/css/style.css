@@ -154,7 +154,7 @@ padding: .5em 0;
 }
 #update_user .form-group input[type="text"], input[type="email"],
 #login .form-group input[type="text"], input[type="email"], input[type="password"],
-#register .form-group input[type="text"],  input[type="email"], input[type="password"],
+#register .form-group input[type="text"],  input[type="email"], input[type="password"],input[type="username"],
 #newFormConsent .form-group input[type="text"], input[type="email"],
 #add_user .form-group input[type="text"], input[type="email"]{
     width: 100%;
@@ -167,7 +167,7 @@ padding: .5em 0;
 }
 
 #update_user .form-group input[type="number"],
-#newFormConsent .form-group input[type="number"],
+#newFormConsent .form-group input[type="number"],input[type="tel"],
 #add_user .form-group input[type="number"]{
     width: 100%;
     padding: .5em 1em;

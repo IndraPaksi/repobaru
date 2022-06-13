@@ -30,10 +30,11 @@ module.exports = {
         if (req.session.isLogin) {
             console.log('id >>>', req.query.id)
             userdb.findById(req.query.id).then(user => {
+                
                 const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-                res.render("update_user", { user, newDate: newDate, role: req.session.role })
+                res.render("update_user", { user, newDate: newDate, role: req.session.role, username: req.session.username })
             }).catch(error => {
-                res.render("update_user", { user: {}, newDate: '', role: req.session.role })
+                res.render("update_user", { user: {}, newDate: '', role: req.session.role, username: req.session.username})
                 // res.status(404).send({ message: error.message || "User not found" })
             })
         } else {
@@ -45,10 +46,11 @@ module.exports = {
         if (req.session.isLogin) {
 
             userdb.findById(req.query.id).then(user => {
+                
                 const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-                res.render("view_user", { user, newDate: newDate })
+                res.render("view_user", { user, newDate: newDate, username: req.session.username })
             }).catch(error => {
-                res.render("view_user", { user: {}, newDate: '' })
+                res.render("view_user", { user: {}, newDate: '', username: req.session.username })
                 // res.status(404).send({ message: error.message || "User not found" })
             })
         } else {
@@ -85,9 +87,10 @@ module.exports = {
                 noregister: code,
                 nama: req.body.nama,
                 suhu: req.body.suhu,
+                tempatlahir: req.body.tempatlahir,
                 TTL: req.body.TTL,
                 usia: req.body.usia,
-                jeniskelamin: req.body.jeniskelamin,
+                jenisKelamin: req.body.jenisKelamin,
                 noktp: req.body.noktp,
                 alamat: req.body.alamat,
                 nohp: req.body.nohp,
@@ -95,6 +98,8 @@ module.exports = {
                 keluhan: req.body.keluhan,
                 penyakit: req.body.penyakit,
                 hasil: req.body.hasil,
+                kodereferensi: req.body.kodereferensi,
+                namaanalis: req.body.username,
                 tanggaldaftar: moment.utc()
 
             })
@@ -107,7 +112,7 @@ module.exports = {
                     autoCode.updateMonthCode(moment().format('YYMM'),'FC')
                     //res.status(201).send({ message: `Data Berhasil Ditambahkan, No Registrasi anda adalah = ${code}`, data})
                     
-                    res.redirect("/daftar?id=<%= data._id %>")
+                    res.redirect("/daftar?id=" + data._id)
 
                 })
                 
@@ -167,7 +172,7 @@ module.exports = {
         const id = req.params.id;
         console.log('data update', req.body)
         userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-            .then(data => {
+        .then(data => {
                 res.redirect("/")
 
             })
@@ -198,17 +203,23 @@ module.exports = {
 
     },
     loginPage(req, res) {
+
         userModels.find({
             email: req.body.email,
             password: req.body.password
         })
             .then(data => {
+                console.log(req.body.email);
+                console.log(req.body.password);
                 if (req.body.email == data[0].email && req.body.password == data[0].password) {
                     session = req.session;
                     session.isLogin = true;
                     session.role = data[0].role;
+                    session.username = data[0].username;
+                    console.log(session)
                     res.redirect('/');
                 }
+
             })
             .catch(error => {
                 res.send('Invalid email or password');
@@ -218,6 +229,7 @@ module.exports = {
     register(req, res) {
         userModels.insertMany(req.body)
             .then(data => {
+                console.log(req.body)
                 res.redirect('/login')
             })
             .catch(error => {
@@ -228,7 +240,7 @@ module.exports = {
     findByNoRegis(req, res) {
         var q = url.parse(req.url, true);
 
-        const cari = {$regex: `^.*${q.query.keyword}*.$`, $options:"i"}
+        const cari = {$regex: `${q.query.keyword}`, $options:"i"}
         const keyword = {
             $or:[{
                 nama: cari
@@ -236,8 +248,13 @@ module.exports = {
                 noregister: cari
             }]
         }
+        console.log('cari', cari)
         console.log('keyword', keyword)
         userdb.find(keyword).then(users => {
+            users.map((dt) => {
+                dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
+                dt['tanggaldaftarf'] = moment(dt.tanggaldaftar).utc().format('D MMMM YYYY')
+            })
           res.render('index', { users, role: req.session.role });
         }).catch(error => {
           res.status(404).send({ message: error.message || "Data not found" })

@@ -22,21 +22,30 @@
         <div class="form-group">
             <label for="">Jenis Kelamin : </label>
             <label class="radio inline">
-                <input type="radio" name="jeniskelamin" value="Laki-Laki" required>Laki - Laki
+                <input type="radio" name="jenisKelamin" value="laki-laki" required>laki-laki
             </label>
             <label class="radio inline">
-                <input type="radio" name="jeniskelamin" value="Perempuan" required>Perempuan
+                <input type="radio" name="jenisKelamin" value="perempuan" required>perempuan
             </label>
         </div>
 
         <div class="form-group">
-            <label for="">Tempat Tanggal Lahir :
+            <label for="">Tempat Lahir :</label>
+            <input type="text" name="tempatlahir" class="form-control"  required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Tanggal Lahir :
                 <input type="date" name="TTL"required></label>
         </div>
         
         <div class="form-group">
             <label for="">Usia :</label>
-            <input type="number" name="usia" class="form-control" required>
+            <input type="number" name="usia" class="form-control" 
+            oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type = "number"
+            maxlength = "2"
+            required>
         </div>
 
 
@@ -55,21 +64,19 @@
 
             <div class="form-group">
                 <label for="">No Handphone :</label>
-                <input type="number" name="nohp" class="form-control" 
-                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type = "number"
-                maxlength = "10"
+                <input type="tel" name="nohp" class="form-control" 
+                minlength = "10"
                  required>
             </div>
 
             <div class="form-group">
                 <label for="">Suhu Badan :</label>
-                <input type="number" name="suhu" class="form-control" required>
+                <input type="number" name="suhu" class="form-control" onchange="setNumberDecimal" min="0" max="50" step="0.1" value="00.0" />
             </div>
     
 
             <div class="form-group">
-                <label for="keluhan">Keluhan : </label>
+                <label for="keluhan"><b> Keluhan : </b></label> 
                 <div class="checkbox inline">
                     <input type="checkbox" name="keluhan" value="Demam">
                     <label for="keluhan">Demam</label>
@@ -118,7 +125,7 @@
 
 
             <div class="form-group">
-                <label for="penyakit">Penyakit Penyerta : </label>
+                <label for="penyakit"><b> Penyakit Penyerta : </b></label>
                 <div class="checkbox inline">
                     <input type="checkbox" name="penyakit" value="Diabetes">
                     <label for="penyakit">Diabetes</label>
@@ -146,6 +153,11 @@
                 <div class="checkbox inline">
                     <input type="text" name="penyakit"  placeholder="Lainnya">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="">Kode Referensi :</label>
+                <input type="text" name="kodereferensi" class="form-control" minlength="8" placeholder="Contoh: Doclink 050722  *Harap isi kode sesuai arahan tim Doclink" required >
             </div>
 
             <div class="form-group">

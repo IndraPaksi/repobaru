@@ -41,9 +41,9 @@
             case 'Operator' : %>
             <div class="form-group">
                 <label for="">Jenis Kelamin : </label>
-                  <input type="radio" name="jeniskelamin" value="Laki-Laki" <%= user.jeniskelamin == 'Laki-Laki'?'checked' : '' %> >
+                  <input type="radio" name="jenisKelamin" value="laki-laki" <%= user.jenisKelamin == 'laki-laki'?'checked' : '' %> >
                   <label class="radio inline" >Laki - Laki</label>
-                  <input type="radio" name="jeniskelamin" value="Perempuan" <%= user.jeniskelamin == 'Perempuan'?'checked' : '' %> >
+                  <input type="radio" name="jenisKelamin" value="perempuan" <%= user.jenisKelamin == 'perempuan'?'checked' : '' %> >
                   <label class="radio inline">Perempuan</label>
                 </div>
                 <% break;
@@ -51,21 +51,37 @@
                 <tbody>
                     <td>Jenis Kelamin</td>
                     <td>  = </td> 
-                    <td><%= user.jeniskelamin %></td>
+                    <td><%= user.jenisKelamin %></td>
                 </tbody>
                   <% break;
                 } %>
 
                 <% switch (role) {
+                  case 'Operator' : %>
+                <div class="form-group">
+                  <label for="">Tempat Lahir :</label>
+                  <input type="text" name="tempatlahir" value="<%= user.tempatlahir %>" class="form-control"  required>
+              </div>
+              <% break;
+            case 'Analis' : %>
+            <tbody>
+              <td> Tempat Lahir </td>
+              <td> = </td>
+              <td> <%= user.tempatlahir %></td>
+            </tbody>
+              <% break;
+            } %>
+
+                <% switch (role) {
                     case 'Operator' : %>
               <div class="form-group">
-                <label for="">Tempat Tanggal Lahir :</label>
+                <label for="">Tanggal Lahir :</label>
                 <input type="date" name="TTL" value="<%= newDate %>">
             </div>
               <% break;
             case 'Analis' : %>
             <tbody>
-              <td> Tempat Tanggal Lahir </td>
+              <td> Tanggal Lahir </td>
               <td> = </td>
               <td> <%= user.TTL %></td>
             </tbody>
@@ -92,7 +108,10 @@
             case 'Operator' : %>
             <div class="form-group">
                 <label for="">No ktp :</label>
-                <input type="number" name="noktp" value="<%= user.noktp %>">
+                <input type="number" name="noktp" value="<%= user.noktp %>"
+                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type = "number"
+                maxlength = "16">
             </div>
             <% break;
             case 'Analis' : %>
@@ -124,7 +143,9 @@
                 case 'Operator' : %>
             <div class="form-group">
                 <label for="">No Hp :</label>
-                <input type="number" name="nohp" value="<%= user.nohp %>">
+                <input type="tel" name="nohp" value="<%= user.nohp %>" 
+                minlength = "10"
+                 required>
             </div>
             <% break;
             case 'Analis' : %>
@@ -150,22 +171,6 @@
              <td> <%= user.email %></td>
             </tbody> 
              <% break;
-            } %>
-
-            <% switch (role) {
-                case 'Operator' : %>
-            <div class="form-group">
-                <label for="">Suhu Badan :</label>
-                <input type="number" name="suhu" value="<%= user.suhu %>" >
-            </div>
-            <% break;
-            case 'Analis' : %>
-            <tbody>
-             <td> Suhu Badan </td>
-             <td> = </td>
-             <td> <%= user.suhu %> </td> 
-            </tbody>
-              <% break;
             } %>
 
             <% switch (role) {
@@ -214,13 +219,13 @@
               </div>
 
               <div class="checkbox inline">
-                <input type="text" name="Lainnya" value="" placeholder="Lainnya">  
+                <input type="text" name="Lainnya" value="<%= user.keluhan %>" placeholder="Lainnya">  
             </div>
               
           </div>
           <% break;
           case 'Analis' : %>
-          <tbody>
+          
            <td> Keluhan </td>
            <td> = </td>
            <td> <%= user.keluhan %></td>
@@ -257,7 +262,7 @@
                 <label for="penyakit" >PPOK (Penyakit Paru Obstruktif Kronis)</label>
             </div>  
             <div class="checkbox inline">
-              <input type="text" name="Lainnya" value="" placeholder="Lainnya">  
+              <input type="text" name="Lainnya" value="<%= user.penyakit %>" placeholder="Lainnya">  
           </div>
         </div>
         <% break;
@@ -271,18 +276,54 @@
         } %>
 
         <% switch (role) {
+          case 'Operator' : %>
+          <div class="form-group">
+            <label for="">Kode Referensi :</label>
+            <input type="text" name="kodereferensi" value="<%= user.kodereferensi %>" class="form-control">
+        </div>
+      <% break;
+    case 'Analis' : %>
+    <tbody>
+      <td> Kode Referensi </td>
+      <td> = </td>
+      <td> <%= user.kodereferensi %></td>
+    </tbody>
+      <% break;
+    } %>
+
+
+    <% switch (role) {
+      case 'Analis' : %>     
+      <div class="form-group">
+        <tbody>
+        <td><label for="">Suhu Badan <td> =</td> </label></td>
+        <td><input type="number" name="suhu" value="<%= user.suhu %>" class="form-control" onchange="setNumberDecimal" min="0" max="50" step="0.1" value="00.0" /></td>
+      </tbody>
+    </div>
+
+    <% break;
+    case 'Operator' : %>
+    
+     <b> Suhu Badan = <%= user.suhu %></b>
+
+      <% break;
+    } %> <br><br>
+
+
+    
+        <% switch (role) {
             case 'Analis' : %>     
             
             <div class="form-group">
                 <tbody>
                <td> <label for="">Hasil Swab TEST <td> =</td> </label></td>
-               <td> <input type="radio" name="hasil" value="positif" <%= user.hasil == 'positif'?'checked' : '' %>>
+               <td> <input type="radio" name="hasil" value="POSITIF" <%= user.hasil == 'POSITIF'?'checked' : '' %>>
                <label class="radio inline">POSITIF </label><br>
 
-                <input type="radio" name="hasil" value="negatif" <%= user.hasil == 'negatif'?'checked' : '' %>>
+                <input type="radio" name="hasil" value="NEGATIF" <%= user.hasil == 'NEGATIF'?'checked' : '' %>>
                 <label class="radio inline">NEGATIF </label><br>
 
-                <input type="radio" name="hasil" value="invalid" <%= user.hasil == 'invalid'?'checked' : '' %>>
+                <input type="radio" name="hasil" value="INVALID" <%= user.hasil == 'INVALID'?'checked' : '' %>>
                 <label class="radio inline">INVALID </label></td>
             </tbody>
             </div>
@@ -291,7 +332,22 @@
             case 'Operator' : %>
               <b>Hasil SWAB TEST  =  <%= user.hasil %> </b> 
               <% break;
-        } %>
+        } %><br><br>
+
+        <% switch (role) {
+          case 'Analis' : %>
+          <tbody>    
+            <td> Nama Analis </td>
+            <td> = </td>
+            <td> <%= username %></td>
+          
+        </tbody>
+          <% break;
+          case 'Operator' : %>
+          <b>Nama Analis  =  <%= username %> </b> 
+          <% break;
+      } %>
+   
 
     </table>
             <div class="form-group">
@@ -299,6 +355,7 @@
             </div>
         
         </div>    
+
         
         </form>
         <!--/form handling-->

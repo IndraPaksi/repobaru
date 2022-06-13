@@ -11,13 +11,17 @@ var schema = new mongoose.Schema({
     suhu:{
         type:Number
     },
+    tempatlahir:{
+        type:String,
+
+    },
     TTL:{
         type:Date
     },
     usia:{
         type:Number
     },
-    jeniskelamin:{
+    jenisKelamin:{
         type:String
     },
     noktp:{
@@ -27,7 +31,7 @@ var schema = new mongoose.Schema({
         type:String
     },
     nohp:{
-        type:Number
+        type:String
     },
     email:{
         type:String,
@@ -36,12 +40,19 @@ var schema = new mongoose.Schema({
     keluhan:Array,
     penyakit:Array,
     hasil:String,    
-    tanggaldaftar:Date
+    tanggaldaftar:Date,
+    namaanalis:String,
+    kodereferensi: Array,
 
 })
 
 
 var userModels = new mongoose.Schema({
+    
+    username:{
+        type:String,
+        required: true
+    },
     email:{
         type:String,
         required:true
@@ -55,6 +66,7 @@ var userModels = new mongoose.Schema({
         required:true
     }
 })
+
 
 const Userdb = mongoose.model('userdb',schema);
 const userModelsCollection = mongoose.model('usermodels',userModels);
