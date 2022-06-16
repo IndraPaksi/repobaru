@@ -32,9 +32,9 @@ module.exports = {
             userdb.findById(req.query.id).then(user => {
                 
                 const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-                res.render("update_user", { user, newDate: newDate, role: req.session.role, username: req.session.role })
+                res.render("update_user", { user, newDate: newDate, role: req.session.role, username: req.session.username, updatedby: user.updatedby })
             }).catch(error => {
-                res.render("update_user", { user: {}, newDate: '', role: req.session.role, username: req.session.role})
+                res.render("update_user", { user: {}, newDate: '', role: req.session.role, username: req.session.username})
                 // res.status(404).send({ message: error.message || "User not found" })
             })
         } else {

@@ -43,7 +43,7 @@ var schema = new mongoose.Schema({
     tanggaldaftar:Date,
     namaanalis:String,
     kodereferensi: Array,
-
+    updatedby:String,
 })
 
 
