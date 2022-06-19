@@ -30,11 +30,19 @@ module.exports = {
         if (req.session.isLogin) {
             console.log('id >>>', req.query.id)
             userdb.findById(req.query.id).then(user => {
+                console.log("USER", user);
                 
-                const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-                res.render("update_user", { user, newDate: newDate, role: req.session.role, username: req.session.username, updatedby: user.updatedby })
+                const newDate = moment(user.TTL).utc().format('YYYY-MM-DD');
+
+                if (user.updatedby == undefined) {
+                    updatedby = req.session.role;
+                } else {
+                    updatedby = user.updatedby;
+                }
+
+                res.render("update_user", { user, newDate: newDate, role: req.session.role, username: req.session.username, updatedby: updatedby })
             }).catch(error => {
-                res.render("update_user", { user: {}, newDate: '', role: req.session.role, username: req.session.username})
+                res.render("update_user", { user: {}, newDate: '', role: req.session.role, username: req.session.username, updatedby: updatedby})
                 // res.status(404).send({ message: error.message || "User not found" })
             })
         } else {
@@ -170,7 +178,10 @@ module.exports = {
                 .send({ message: "Data to update cannot empty" })
         }
         const id = req.params.id;
+
+        req.body.updatedby = req.session.role
         console.log('data update', req.body)
+
         userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
                 res.redirect("/")
