@@ -35,7 +35,7 @@ module.exports = {
                 const newDate = moment(user.TTL).utc().format('YYYY-MM-DD');
 
                 if (user.updatedby == undefined) {
-                    updatedby = req.session.role;
+                    updatedby = req.session.username;
                 } else {
                     updatedby = user.updatedby;
                 }
@@ -179,7 +179,7 @@ module.exports = {
         }
         const id = req.params.id;
 
-        req.body.updatedby = req.session.role
+        req.body.updatedby = req.session.username
         console.log('data update', req.body)
 
         userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
