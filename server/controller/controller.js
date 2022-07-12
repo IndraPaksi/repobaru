@@ -132,7 +132,9 @@ module.exports = {
         })
     },
     find(req, res) {
-        userdb.find()
+        const limit = req.query.limit;
+        const offset = req.query.offset;
+        userdb.find().skip(offset).limit(limit)
             .then(user => {
                 res.send(user)
             })
