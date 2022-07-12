@@ -10,7 +10,9 @@ var url = require('url');
 module.exports = {
     home(req, res) {
         if (req.session.isLogin) {
-            userdb.find()
+            const limit = req.query.limit || 0;
+            const offset = req.query.offset || 0;
+            userdb.find().skip(offset).limit(limit)
                 .then(users => {
                     users.map((dt) => {
                         dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
