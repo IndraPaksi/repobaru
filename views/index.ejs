@@ -32,7 +32,7 @@
 
 
         <!--form handling-->
-        <form action="/"method = "POST">
+        <form action="/?limit=10&offset=0"method = "GET">
             <table class="table" style="margin-left:auto;margin-right:auto">
                 <thead class="thead-dark">
                     <tr>
@@ -56,12 +56,12 @@
             </table>
             <div class="pagination">
                 <a href="#">&laquo;</a>
-                <a href="api/users?limit=10&offset=0" class="active">1</a>
-                <a href="api/users?limit=10&offset=10">2</a>
-                <a href="api/users?limit=10&offset=20">3</a>
-                <a href="api/users?limit=10&offset=30">4</a>
-                <a href="api/users?limit=10&offset=40">5</a>
-                <a href="api/users?limit=10&offset=50">6</a>
+                <a href="/?limit=10&offset=0&page=1">1</a>
+                <a href="/?limit=10&offset=10&page=2">2</a>
+                <a href="/?limit=10&offset=20&page=3">3</a>
+                <a href="/?limit=10&offset=30&page=4">4</a>
+                <a href="/?limit=10&offset=40&page=5">5</a>
+                <a href="/?limit=10&offset=50&page=6">6</a>
                 <a href="#">&raquo;</a>
             </div>
         </form>

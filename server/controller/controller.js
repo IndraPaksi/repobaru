@@ -12,7 +12,9 @@ module.exports = {
         if (req.session.isLogin) {
             const limit = req.query.limit || 0;
             const offset = req.query.offset || 0;
-            userdb.find().skip(offset).limit(limit)
+            const sortBy = {tanggaldaftar: -1};
+
+            userdb.find().skip(offset).limit(limit).sort(sortBy)
                 .then(users => {
                     users.map((dt) => {
                         dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
@@ -232,7 +234,7 @@ module.exports = {
                     session.role = data[0].role;
                     session.username = data[0].username;
                     console.log(session)
-                    res.redirect('/');
+                    res.redirect('/?limit=10&offset=0');
                 }
 
             })
