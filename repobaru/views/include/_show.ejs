@@ -1,0 +1,57 @@
+<% for (var i = 0; i<users.length; i++){ %>
+
+    <tr>
+        <td><%= i+1 %></td>
+        <td><%= users[i].noregister %></td>
+        <td><%= users[i].nama %></td> 
+        <td><%= users[i].ttlf %></td>
+        <td><%= users[i].usia %></td>
+        <td><%= users[i].jeniskelamin %></td>
+        <td><%= users[i].noktp %></td>
+        <td><%= users[i].nohp %></td>
+        <td><%= users[i].hasil %></td>
+        <td><%= users[i].tanggaldaftarf %></td>
+        <td>
+    
+            <a href= "/update-user?id=<%= users[i]._id %>" class="border-shadow" >
+               <b> <span class="text-gradient">UPDATE</span></b><br>
+            </a>
+    
+            <a href= "/view-user?id=<%= users[i]._id %>" class="border-shadow">
+               <b> <span class="text-gradient">DETAIL</span></b><br>
+            </a>
+    
+            <% if(role=='Operator'){ %>
+            <a href="#" class="border-shadow" onclick="deleteUser('<%= users[i]._id %>');" >
+               <b> <span class="text-gradient">DELETE</span></b><br>
+            </a>
+        
+            <a href= "/api/export/users/<%= users[i]._id %>" class="border-shadow">
+                <b><span class="text-gradient">EXPORT</span></b>
+            </a>
+            <% } %>
+    
+        </td>
+    </tr>
+    
+    <% } %>
+    
+    <script>
+    function deleteUser(id) {
+        if (confirm("Apakah kamu yakin mau menghapus data ini?") == true) {
+            
+            fetch(`/api/users/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    }
+    </script>

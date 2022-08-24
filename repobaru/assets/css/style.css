@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow&family=PT+Sans&display=swap');
+
+:root{
+    --dark: #2b2d42;
+    --light: #adb5bd;
+    --border: #dee2e6;
+    --border-btn: #edf2f4;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.container{
+    max-width:none;
+    margin-top:2em ;
+}
+
+.d-flex{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.justify-content{
+    justify-content: center;
+}
+img.image {
+    max-width: 520px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.border-shadow{
+    border: 1px solid var(--border-btn);
+    box-shadow: 1px 3px 10px #e9ecef;
+}
+
+.text-dark{
+    color: var(--dark);
+}
+
+.inline{
+    display: inline-block;
+}
+.text-light{
+    color: var(--light);
+}
+
+.text-gradient{
+    background-clip: text;
+    --webkit-text-fill-color: transparent;
+}
+
+#header nav{
+    padding: 0.5em 0;
+    width: 100%;
+}
+
+#site-main{
+    margin-top: 1em;
+    font-family: 'Barlow', sans-serif;
+}
+
+#site-main .container .box-nav>a{
+    color: #2b2d42;
+    font-size: 0.7em;
+    padding: .5em 1em;
+    margin: .5em ;
+
+}
+
+#site-main .container form{
+    margin: 1em 0;
+}
+
+table{
+    border-spacing: 0px;
+    width: 75%;
+    margin: 1em 1em ;
+    border: 1px solid;
+}
+
+table td, .table th{
+    padding: .5em;
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid ;
+    font-size: 0.8em;
+
+}
+
+.table td>a.btn{
+    padding: 0 .5em;
+    font-size: 1.1em;
+    margin: 0 .2em;
+}
+
+.table tr:hover{
+    background-color: #ff0000;
+}
+
+.table tr:hover td>a{
+    box-shadow: none;
+}
+
+.table .thead-dark th{
+    color: #fff;
+    background-color: var(--dark);
+    border-color: #32383e;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1024px){
+    tr {
+        border: 1px solid var(--border);
+    }
+
+    td{
+        border: none;
+        position: relative;
+    }
+
+}
+
+/* add user & update usert */
+
+.form-title{
+    margin-top: 1em;
+}
+.form-title>h2{
+padding: .5em 0;
+}
+.new_user{
+    max-width: 786px;
+    margin: auto;
+}
+
+#update_user .form-group,
+#login .form-group,
+#register .form-group,
+#newFormConsent .form-group,
+#add_user .form-group{
+    margin: .4em 1em;
+}
+#update_user .form-group input[type="text"], input[type="email"],
+#login .form-group input[type="text"], input[type="email"], input[type="password"],
+#register .form-group input[type="text"],  input[type="email"], input[type="password"],input[type="username"],
+#newFormConsent .form-group input[type="text"], input[type="email"],
+#add_user .form-group input[type="text"], input[type="email"]{
+    width: 100%;
+    padding: .5em 1em;
+    margin: .5em 0;
+    border: 1px solid var(--border);
+    font-family: 'Barlow', sans-serif;
+    font-size: 1em;
+    border-radius: .2em;
+}
+
+#update_user .form-group input[type="number"],
+#newFormConsent .form-group input[type="number"],input[type="tel"],
+#add_user .form-group input[type="number"]{
+    width: 100%;
+    padding: .5em 1em;
+    margin: .5em 0;
+    border: 1px solid var(--border);
+    font-family: 'Barlow', sans-serif;
+    font-size: 1em;
+    border-radius: .2em;
+}
+
+#update_user .form-group input[type="date"],
+#newFormConsent .form-group input[type="date"],
+#add_user .form-group input[type="date"]{
+    width: 100%;
+    padding: .5em 1em;
+    margin: .5em 0;
+    border: 1px solid var(--border);
+    font-family: 'Barlow', sans-serif;
+    font-size: 1em;
+    border-radius: .2em;
+}
+
+
+#update_user .form-group .radio,
+#newFormConsent .form-group .radio,
+#add_user .form-group .radio{
+    margin: .5em 1em;
+}
+
+
+#update_user .form-group .checkbox,
+#newFormConsent .form-group .checkbox,
+#add_user .form-group .checkbox{
+    margin: .5em 1em;
+}
+
+
+#update_user .form-group .btn,
+#login .form-group .btn,
+#register .form-group .btn,
+#newFormConsent .form-group .btn,
+#add_user .form-group .btn{
+    width: 100%;
+    padding: 1em 1em;
+    background-color: #ff0000;
+    border: none;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: .2em;
+    margin: .5em 0;
+}
+
+#update_user .form-group .btn:hover,
+#newFormConsent .form-group .btn:hover,
+#add_user .form-group .btn:hover{
+    background-color: var(--dark);
+    color: var(--border);
+}
+
+.btn.btn-success{
+    padding: .2em 2em;
+    width: 25%;
+    background-color: #008000;
+    border-radius: 25px;
+    
+    
+}
+
+.center {
+    text-align: center;
+  }
+  
+.pagination {
+    display: inline-block;
+
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 0 4px;
+  }
+  
+  .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+  }

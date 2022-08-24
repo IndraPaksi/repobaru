@@ -1,0 +1,77 @@
+<!--include header-->
+<%-include('include/_header')%>
+<!--/include header-->
+
+    <!--Main site-->
+    <main id="site-main">
+        <div class="container">
+            
+            <div class="box-nav d-flex justify-content">
+                <div class="box">
+                    <div class="container-1">
+                        <form action="/search" method="GET">
+                          <input type="search" id="search" name="keyword" placeholder="Cari Disini....." />
+                          <input type="submit" value="Cari">
+
+
+
+                <% if(role == 'Operator'){ %>
+                <a href="http://localhost:3000/api/export/users.xlsx" class="border-shadow">
+                    <span class="text-gradient">Export ALL <i class="fa-solid fa-download"></i></span>
+                </a>
+                <% } %>
+                <a href='/logout' class="border-shadow">
+                    <span class="text-gradient">Logout <i class="fa-solid fa-right-from-bracket"></i></span>
+                </a>
+            </form>
+            </div>
+        </div>
+         
+            </div>
+        </div>
+
+
+        <!--form handling-->
+        <form action="/?limit=50&offset=0"method = "GET">
+            <table class="table" style="margin-left:auto;margin-right:auto">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>No Registrasi</th>
+                        <th>Nama</th>
+                        <th>TTL</th>
+                        <th>Usia</th>
+                        <th>Jenis Kelamin</th>
+                        <th>No. KTP</th>
+                        <th>No HP</th>
+                        <th>Hasil SWAB</th>
+                        <th>tanggal Daftar</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <%-include('include/_show')%>
+                </tbody>
+
+            </table>
+        </form>
+
+        <div class="center">
+            <div class="pagination" >
+                <a href="/?limit=10&offset=0&page=1">First</a>
+                <a href="/?limit=10&offset=0&page=2">Previous</a>
+                <a href="/?limit=10&offset=50&page=3">Next</a>
+                <a href="/?limit=10&offset=150&page=4">Last</a>
+            </div>
+        </div>
+  
+    </div>
+    </main>    
+    <!--/Main site-->
+        
+
+<!--include footer-->
+<%-include('include/_footer')%>
+<!--/include footer-->
+
+

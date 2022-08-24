@@ -1,0 +1,199 @@
+<!--form handling-->
+<form action="/api/users" method="POST" id="newFormConsent">
+
+
+    <div class="new_user">
+        <div class="form-group">
+            <label for="">Email :</label>
+            <input type="email" name="email" id="searchEmail" class="form-control" required>
+        </div>
+
+        <th>
+            <a href="#"  class="btn border-shadow " id="searchButton">
+                <span class="text-gradient"><i class="fa-solid fa-magnifying-glass"></i>Periksa Email</span>
+            </a>
+        </th>
+
+        <div class="form-group">
+            <label for="">Nama Lengkap :</label>
+            <input type="text" name="nama" class="form-control"  required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Jenis Kelamin : </label>
+            <label class="radio inline">
+                <input type="radio" name="jenisKelamin" value="laki-laki" required>laki-laki
+            </label>
+            <label class="radio inline">
+                <input type="radio" name="jenisKelamin" value="perempuan" required>perempuan
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="">Tempat Lahir :</label>
+            <input type="text" name="tempatlahir" class="form-control"  required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Tanggal Lahir :
+                <input type="date" name="TTL"required></label>
+        </div>
+        
+        <div class="form-group">
+            <label for="">Usia :</label>
+            <input type="number" name="usia" class="form-control" 
+            oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type = "number"
+            maxlength = "2"
+            required>
+        </div>
+
+
+        <div class="form-group">
+                <label for="">No KTP :</label>
+                <input type="number" name="noktp" class="form-control" 
+                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type = "number"
+                maxlength = "16"
+                required>
+        </div>
+            <div class="form-group">
+                <label for="">Alamat :</label>
+                <input type="text" name="alamat" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="">No Handphone :</label>
+                <input type="tel" name="nohp" class="form-control" 
+                minlength = "10"
+                 required>
+            </div>
+
+            <div class="form-group">
+                <label for="">Suhu Badan :</label>
+                <input type="number" name="suhu" class="form-control" onchange="setNumberDecimal" min="0" max="50" step="0.1" value="00.0" />
+            </div>
+    
+
+            <div class="form-group">
+                <label for="keluhan"><b> Keluhan : </b></label> 
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Demam">
+                    <label for="keluhan">Demam</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Batuk">
+                    <label for="keluhan">Batuk</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Pilek">
+                    <label for="keluhan">Pilek</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Sakit Tenggorokan">
+                    <label for="keluhan">Sakit Tenggorokan</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Sesak">
+                    <label for="keluhan">Sesak</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Menggigil">
+                    <label for="keluhan">Menggigil</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Pusing">
+                    <label for="keluhan">Pusing </label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Mual">
+                    <label for="keluhan">Mual</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Muntah">
+                    <label for="keluhan">Muntah</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="keluhan" value="Diare">
+                    <label for="keluhan">Diare</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="text" name="keluhan"  placeholder="Lainnya">
+                </div>
+                
+            </div>
+
+
+            <div class="form-group">
+                <label for="penyakit"><b> Penyakit Penyerta : </b></label>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="penyakit" value="Diabetes">
+                    <label for="penyakit">Diabetes</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="penyakit" value="Jantung">
+                    <label for="penyakit">Jantung</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="penyakit" value="Hipertensi">
+                    <label for="penyakit">Hipertensi</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="penyakit" value="Ginjal">
+                    <label for="penyakit">Ginjal</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="penyakit" value="Keganasan">
+                    <label for="penyakit">Keganasan</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="penyakit" value="PPOK">
+                    <label for="penyakit">PPOK (Penyakit Paru Obstruktif Kronis)</label>
+                </div>
+                <div class="checkbox inline">
+                    <input type="text" name="penyakit"  placeholder="Lainnya">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="">Kode Referensi :</label>
+                <input type="text" name="kodereferensi" class="form-control" minlength="8" placeholder="Contoh: Doclink 050722  *Harap isi kode sesuai arahan tim Doclink" required >
+            </div>
+
+            <div class="form-group">
+                <label for="pernyataan"></label>
+                <div class="checkbox inline">
+                    <input type="checkbox" name="pernyataan" required>
+                    <b>Saya menyatakan data yang disampaikan diatas adalah benar dan saya bersedia untuk dilakukan pemeriksaan Covid-19 dan dapat dipergunakan sebagaimana mestinya</b>
+                </div>
+
+            <div class="form-group">
+                <%- captcha%>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn txt-dark update">SAVE</button>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</form>
+<% if(captcha) {%>
+    <!-- <form action="verify" method="POST">
+
+        <button type="submit">Verify captcha</button>
+        <br />
+    </form> -->
+    <% } %>
+        <!-- <script>
+            function cb(token) {
+                console.log('token', token)
+                var input = document.createElement('input')
+                input.setAttribute('type', 'text')
+                input.setAttribute('name', 'g-recaptcha-response')
+                input.setAttribute('value', token)
+                document.getElementsByTagName('form')[1].appendChild(input)
+            }
+        </script> -->
+        <!--/form handling-->
