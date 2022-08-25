@@ -10,17 +10,27 @@ var url = require('url');
 module.exports = {
     home(req, res) {
         if (req.session.isLogin) {
-            const limit = req.query.limit || 0;
-            const offset = req.query.offset || 0;
+            const action = req.query.action || "first";
+            var limit = parseInt(req.query.limit, 10) || 10;
+            var page = parseInt(req.query.page,10) || 1;
             const sortBy = {tanggaldaftar: -1};
 
-            userdb.find().skip(offset).limit(limit).sort(sortBy)
+            if (action == "first" || page <= 1) {
+              page = 1;
+            } else if (action == "next") {
+              page += 1;
+            } else if (action == "previous") {
+              page -= 1;
+            }
+
+            userdb.find().skip(page-1).limit(limit).sort(sortBy)
                 .then(users => {
                     users.map((dt) => {
                         dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
                         dt['tanggaldaftarf'] = moment(dt.tanggaldaftar).utc().format('D MMMM YYYY')
                     })
-                    res.render('index', { users, role: req.session.role });
+
+                    res.render('index', { users, role: req.session.role, page: page });
                 })
                 .catch(err => {
                     res.render('index', { users: [], role: req.session.role });
@@ -234,7 +244,7 @@ module.exports = {
                     session.role = data[0].role;
                     session.username = data[0].username;
                     console.log(session)
-                    res.redirect('/?limit=10&offset=0');
+                    res.redirect('/?page=1&limit=10');
                 }
 
             })

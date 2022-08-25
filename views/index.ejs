@@ -56,12 +56,9 @@
             </table>
             <div class="pagination">
                 <a href="#">&laquo;</a>
-                <a href="/?limit=10&offset=0&page=1">1</a>
-                <a href="/?limit=10&offset=10&page=2">2</a>
-                <a href="/?limit=10&offset=20&page=3">3</a>
-                <a href="/?limit=10&offset=30&page=4">4</a>
-                <a href="/?limit=10&offset=40&page=5">5</a>
-                <a href="/?limit=10&offset=50&page=6">6</a>
+                <a href="/?page=1&limit=10&action=first">First</a>
+                <a href="/?page=<%= page %>&limit=10&action=previous">Previous</a>
+                <a href="/?page=<%= page %>&limit=10&action=next">Next</a>
                 <a href="#">&raquo;</a>
             </div>
         </form>
