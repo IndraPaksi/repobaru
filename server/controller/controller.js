@@ -9,6 +9,9 @@ var url = require('url');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
+const jwtKey = process.env.TOKEN
+const jwtExpirySeconds = 120 * 60
+
 module.exports = {
     home(req, res) {
         if (req.session.isLogin) {
@@ -23,7 +26,7 @@ module.exports = {
               }
             }
 
-            userdb.find().skip(page-1).limit(limit).sort(sortBy)
+            userdb.find().skip((page-1) * 10).limit(limit).sort(sortBy)
                 .then(users => {
                     users.map((dt) => {
                         dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
@@ -239,18 +242,23 @@ module.exports = {
                 console.log(req.body.email);
                 console.log(req.body.password);
                 if (req.body.email == data[0].email && req.body.password == data[0].password) {
+                    const username = data[0].username;
+                    // Create token
+                    const token = jwt.sign({username}, jwtKey, {
+                      algorithm: "HS256",
+		                  expiresIn: jwtExpirySeconds,
+                    });
+                
                     session = req.session;
                     session.isLogin = true;
                     session.role = data[0].role;
                     session.username = data[0].username;
-                    console.log(session)
+                    session.token = token;
                     res.redirect('/?page=1&limit=10&action=first');
                 }
-                
-
             })
             .catch(error => {
-                res.send('Invalid email or password');
+                res.send('Invalid email or password', error);
             });
     },
 
