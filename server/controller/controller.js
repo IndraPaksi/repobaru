@@ -15,10 +15,6 @@ module.exports = {
             var page = parseInt(req.query.page,10) || 1;
             const sortBy = {tanggaldaftar: -1};
 
-            // if (action == "first") {
-            //   page = 1;
-            // } else if (action == "next") {
-            //   page += 1;
             if (action == "previous") {
               if (page <= 1) {
                 page = 1;
