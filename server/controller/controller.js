@@ -15,12 +15,14 @@ module.exports = {
             var page = parseInt(req.query.page,10) || 1;
             const sortBy = {tanggaldaftar: -1};
 
-            if (action == "first" || page <= 1) {
-              page = 1;
-            } else if (action == "next") {
-              page += 1;
-            } else if (action == "previous") {
-              page -= 1;
+            // if (action == "first") {
+            //   page = 1;
+            // } else if (action == "next") {
+            //   page += 1;
+            if (action == "previous") {
+              if (page <= 1) {
+                page = 1;
+              }
             }
 
             userdb.find().skip(page-1).limit(limit).sort(sortBy)
@@ -244,7 +246,7 @@ module.exports = {
                     session.role = data[0].role;
                     session.username = data[0].username;
                     console.log(session)
-                    res.redirect('/?page=1&limit=10');
+                    res.redirect('/?page=1&limit=10&action=first');
                 }
 
             })
