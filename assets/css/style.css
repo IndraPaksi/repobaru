@@ -87,16 +87,18 @@ img.image {
 
 table{
     border-spacing: 0px;
-    width: 50%;
+    width: 75%;
     margin: 1em 1em ;
+    border: 1px solid;
 }
 
 table td, .table th{
     padding: .5em;
-    vertical-align: top;
-    text-align: left;
-    border-top: 1px solid var(--border);
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid ;
     font-size: 0.8em;
+
 }
 
 .table td>a.btn{
@@ -237,15 +239,23 @@ padding: .5em 0;
     
 }
 
+.center {
+    text-align: center;
+  }
+  
 .pagination {
     display: inline-block;
+
   }
   
   .pagination a {
     color: black;
     float: left;
-    padding: 8px 16px;
+    padding: 10px 20px;
     text-decoration: none;
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 0 4px;
   }
   
   .pagination a.active {

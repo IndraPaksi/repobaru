@@ -6,6 +6,8 @@ const { getMaxListeners } = require('../model/model');
 const { userModels } = require('../model/model');
 const autoCode = require('./autocode')
 var url = require('url');
+const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
 
 module.exports = {
     home(req, res) {
@@ -244,6 +246,7 @@ module.exports = {
                     console.log(session)
                     res.redirect('/?page=1&limit=10&action=first');
                 }
+                
 
             })
             .catch(error => {
