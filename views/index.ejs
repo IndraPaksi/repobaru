@@ -32,7 +32,7 @@
 
 
         <!--form handling-->
-        <form action="/?limit=10&offset=0"method = "GET">
+        <form action="/"method = "GET">
             <table class="table" style="margin-left:auto;margin-right:auto">
                 <thead class="thead-dark">
                     <tr>
@@ -54,12 +54,43 @@
                 </tbody>
 
             </table>
-            <div class="pagination">
-                <a href="/?page=1&limit=10&action=first">First</a>
-                <a href="/?page=<%= page-1 %>&limit=10&action=previous">Previous</a>
-                <a href="/?page=<%= page+1 %>&limit=10&action=next">Next</a>
-            </div>
-        </form>
+        
+            <% if (pages > 0) { %>
+                <ul class="pagination text-center">
+                    <% if (current == 1) { %>
+                        <li class="disabled"><a>First</a></li>
+                    <% } else { %>
+                        <li><a href="/index/1">First</a></li>
+                    <% } %>
+                    <% if (Number(current) - 1 > 0) { %>
+                        <li><a href="/index/<%= Number(current) - 1 %>">Prev</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                            <li class="active"><a><%= i %></a></li>
+                        <% } else { %>
+                            <li><a href="/index/<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                            <li class="disabled"><a>...</a></li>
+                        <% } %>
+                    <% } %>
+                    <% if (Number(current) + 1 <= pages) { %>
+                        <li><a href="/index/<%= Number(current) + 1 %>">Next</a></li>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="disabled"><a>Last</a></li>
+                    <% } else { %>
+                        <li><a href="/index/<%= pages %>">Last</a></li>
+                    <% } %>
+                </ul>
+            <% } %>
+    </form>
+
   
     </div>
     </main>    

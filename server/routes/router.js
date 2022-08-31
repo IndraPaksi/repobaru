@@ -7,6 +7,10 @@ const recaptcha = new Recaptcha(process.env.RECAPTCHA_SITE_KEY, process.env.RECA
 const services = require('../services/render');
 const controller = require('../controller/controller');
 const exportExcel = require('../controller/export');
+const jwt = require("jsonwebtoken");
+const session = require('express-session');
+const { userdb } = require('../model/model');
+
 
 route.get('/', controller.home);
 
@@ -16,12 +20,14 @@ route.get('/new', recaptcha.middleware.render, services.newFormConsent);
 
 route.get('/update-user', controller.updatePage);
 route.get('/daftar', controller.daftar);
-route.get('/view-user', controller.viewPage);
 route.post('/login', controller.loginPage);
-route.post('/register', controller.register);
+route.get('/view-user', controller.viewPage);
+route.post('/register', controller.register)
+
 route.get('/login', (req, res, next) => {
-    res.render('login');
-});
+        res.render('login');
+    });
+
 route.get('/logout',(req,res) => {
     req.session.destroy();
     res.redirect('/');
@@ -29,6 +35,25 @@ route.get('/logout',(req,res) => {
 route.get('/register', (req, res, next) => {
     res.render('register');
 });
+route.get('/index/:page', function(req, res, next) {
+    var perPage = 9
+    var page = req.params.page || 1
+    
+    userdb
+    .find({})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, index) {
+        userdb.count().exec(function(err, count) {
+            if (err) return next(err)
+            res.render('views/index', {
+                index: index,
+                current: page,
+                pages: Math.ceil(count / perPage)
+            })
+        })
+    })
+})
 
 route.get('/search',controller.findByNoRegis);
 

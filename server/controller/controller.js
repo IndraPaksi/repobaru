@@ -8,6 +8,7 @@ const autoCode = require('./autocode')
 var url = require('url');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+const { token } = require('morgan');
 
 const jwtKey = process.env.TOKEN
 const jwtExpirySeconds = 120 * 60
@@ -15,18 +16,9 @@ const jwtExpirySeconds = 120 * 60
 module.exports = {
     home(req, res) {
         if (req.session.isLogin) {
-            const action = req.query.action || "first";
-            var limit = parseInt(req.query.limit, 10) || 10;
-            var page = parseInt(req.query.page,10) || 1;
             const sortBy = {tanggaldaftar: -1};
 
-            if (action == "previous") {
-              if (page <= 1) {
-                page = 1;
-              }
-            }
-
-            userdb.find().skip((page-1) * 10).limit(limit).sort(sortBy)
+            userdb.find().sort(sortBy)
                 .then(users => {
                     users.map((dt) => {
                         dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
@@ -247,15 +239,21 @@ module.exports = {
                     const token = jwt.sign({username}, jwtKey, {
                       algorithm: "HS256",
 		                  expiresIn: jwtExpirySeconds,
+
                     });
+                    
+                    data.token = token;
+
                 
                     session = req.session;
                     session.isLogin = true;
                     session.role = data[0].role;
                     session.username = data[0].username;
                     session.token = token;
-                    res.redirect('/?page=1&limit=10&action=first');
+                    res.redirect('/');
                 }
+                 
+
             })
             .catch(error => {
                 res.send('Invalid email or password', error);
@@ -297,5 +295,6 @@ module.exports = {
         })
     }
 
+    
 
 }
