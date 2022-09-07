@@ -8,6 +8,12 @@ const QRCode = require('qrcode')
 
 module.exports = {
     get_data(req, res, type) {
+        try {
+            const decoded = jwt.verify(req.session.token, jwtKey);
+          } catch (err) {
+            return res.status(401).send("Invalid Token");
+          }
+
         userdb.find().then(data => {
             let dt = []
             data.map(val => {
@@ -44,6 +50,12 @@ module.exports = {
         // res.status(200).send(XLSX.write(wb, {type:'buffer', bookType:type}));
     },
     getDataOne(req, res, type) {
+        try {
+            const decoded = jwt.verify(req.session.token, jwtKey);
+          } catch (err) {
+            return res.status(401).send("Invalid Token");
+          }
+          
         userdb.findById(req.params.id).then(data => {
             console.log('data one', data)
             const pathToExcelFile = path.resolve(__dirname,"../../assets/template/")

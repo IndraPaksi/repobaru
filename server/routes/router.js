@@ -35,25 +35,7 @@ route.get('/logout',(req,res) => {
 route.get('/register', (req, res, next) => {
     res.render('register');
 });
-route.get('/index/:page', function(req, res, next) {
-    var perPage = 9
-    var page = req.params.page || 1
-    
-    userdb
-    .find({})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec(function(err, index) {
-        userdb.count().exec(function(err, count) {
-            if (err) return next(err)
-            res.render('views/index', {
-                index: index,
-                current: page,
-                pages: Math.ceil(count / perPage)
-            })
-        })
-    })
-})
+route.get('/index/:page', controller.indexPage);
 
 route.get('/search',controller.findByNoRegis);
 

@@ -14,28 +14,67 @@ const jwtKey = process.env.TOKEN
 const jwtExpirySeconds = 120 * 60
 
 module.exports = {
+    indexPage(req, res) {
+      if (req.session.isLogin) {
+        var perPage = 9
+        var page = req.params.page || 1
+        
+        userdb
+        .find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(err, users) {
+            userdb.count().exec(function(err, count) {
+                if (err) return next(err)
+                res.render('index', {
+                    users, 
+                    role: req.session.role, 
+                    current: page,
+                    pages: Math.ceil(count / perPage)
+                })
+            })
+        })
+      } else {
+        res.redirect('/login')
+      }
+    },
     home(req, res) {
         if (req.session.isLogin) {
-            const sortBy = {tanggaldaftar: -1};
+          var perPage = 9
+          var page = req.params.page || 1
+          
+          userdb
+          .find({})
+          .skip((perPage * page) - perPage)
+          .limit(perPage)
+          .exec(function(err, users) {
+              userdb.count().exec(function(err, count) {
+                  if (err) return next(err)
+                  
+                  users.map((dt) => {
+                      dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
+                      dt['tanggaldaftarf'] = moment(dt.tanggaldaftar).utc().format('D MMMM YYYY')
+                  })
 
-            userdb.find().sort(sortBy)
-                .then(users => {
-                    users.map((dt) => {
-                        dt['ttlf'] = moment(dt.TTL).utc().format('D MMMM YYYY')
-                        dt['tanggaldaftarf'] = moment(dt.tanggaldaftar).utc().format('D MMMM YYYY')
-                    })
-
-                    res.render('index', { users, role: req.session.role, page: page });
-                })
-                .catch(err => {
-                    res.render('index', { users: [], role: req.session.role });
-                    // res.status(500).send({ message: err.message || "Error" })
-                })
+                  res.render('index', { 
+                    users, 
+                    role: req.session.role, 
+                    current: page,
+                    pages: Math.ceil(count / perPage),
+                  })
+              })
+          })
         } else {
             res.redirect('/login')
         }
     },
     updatePage(req, res) {
+        try {
+          const decoded = jwt.verify(req.session.token, jwtKey);
+        } catch (err) {
+          return res.status(401).send("Invalid Token");
+        }
+
         if (req.session.isLogin) {
             console.log('id >>>', req.query.id)
             userdb.findById(req.query.id).then(user => {
@@ -60,87 +99,108 @@ module.exports = {
 
     },
     viewPage(req, res) {
-        if (req.session.isLogin) {
+      try {
+        const decoded = jwt.verify(req.session.token, jwtKey);
+      } catch (err) {
+        return res.status(401).send("Invalid Token");
+      }
 
-            userdb.findById(req.query.id).then(user => {
-                
-                const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-                res.render("view_user", { user, newDate: newDate, username: req.session.username })
-            }).catch(error => {
-                res.render("view_user", { user: {}, newDate: '', username: req.session.username })
-                // res.status(404).send({ message: error.message || "User not found" })
-            })
-        } else {
-            res.redirect('/login')
-        }
+      if (req.session.isLogin) {
 
+          userdb.findById(req.query.id).then(user => {
+              
+              const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
+              res.render("view_user", { user, newDate: newDate, username: req.session.username })
+          }).catch(error => {
+              res.render("view_user", { user: {}, newDate: '', username: req.session.username })
+              // res.status(404).send({ message: error.message || "User not found" })
+          })
+      } else {
+          res.redirect('/login')
+      }
     },
     
     daftar(req, res) {
-            userdb.findById(req.query.id).then(user => {
-                const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
-                res.render("daftar", { user, newDate: newDate })
-            }).catch(error => {
-                res.render("daftar", { user: {}, newDate: '' })
-                // res.status(404).send({ message: error.message || "User not found" })
-            })
+      try {
+        const decoded = jwt.verify(req.session.token, jwtKey);
+      } catch (err) {
+        return res.status(401).send("Invalid Token");
+      }
+
+      userdb.findById(req.query.id).then(user => {
+          const newDate = moment(user.TTL).utc().format('YYYY-MM-DD')
+          res.render("daftar", { user, newDate: newDate })
+      }).catch(error => {
+          res.render("daftar", { user: {}, newDate: '' })
+          // res.status(404).send({ message: error.message || "User not found" })
+      })
 
     },
     create(req, res) {
+      try {
+        const decoded = jwt.verify(req.session.token, jwtKey);
+      } catch (err) {
+        return res.status(401).send("Invalid Token");
+      }
 
-        if (req.recaptcha.error) {
-            res.status(400).send({ message: req.recaptcha.error });
-            return
-        }
+      if (req.recaptcha.error) {
+          res.status(400).send({ message: req.recaptcha.error });
+          return
+      }
 
-        if (!req.body) {
-            res.status(400).send({ message: "Content cannot be empty" });
-            return;
-        }
+      if (!req.body) {
+          res.status(400).send({ message: "Content cannot be empty" });
+          return;
+      }
 
-        
-        autoCode.getCode('FC').then(code => {
-            const user = new userdb({
-                noregister: code,
-                nama: req.body.nama,
-                suhu: req.body.suhu,
-                tempatlahir: req.body.tempatlahir,
-                TTL: req.body.TTL,
-                usia: req.body.usia,
-                jenisKelamin: req.body.jenisKelamin,
-                noktp: req.body.noktp,
-                alamat: req.body.alamat,
-                nohp: req.body.nohp,
-                email: req.body.email,
-                keluhan: req.body.keluhan,
-                penyakit: req.body.penyakit,
-                hasil: req.body.hasil,
-                kodereferensi: req.body.kodereferensi,
-                namaanalis: req.body.username,
-                tanggaldaftar: moment.utc()
+      
+      autoCode.getCode('FC').then(code => {
+          const user = new userdb({
+              noregister: code,
+              nama: req.body.nama,
+              suhu: req.body.suhu,
+              tempatlahir: req.body.tempatlahir,
+              TTL: req.body.TTL,
+              usia: req.body.usia,
+              jenisKelamin: req.body.jenisKelamin,
+              noktp: req.body.noktp,
+              alamat: req.body.alamat,
+              nohp: req.body.nohp,
+              email: req.body.email,
+              keluhan: req.body.keluhan,
+              penyakit: req.body.penyakit,
+              hasil: req.body.hasil,
+              kodereferensi: req.body.kodereferensi,
+              namaanalis: req.body.username,
+              tanggaldaftar: moment.utc()
 
-            })
-            console.log(user)
+          })
+          console.log(user)
 
-            user
-                .save(user)
-                .then(data => {
-                    
-                    autoCode.updateMonthCode(moment().format('YYMM'),'FC')
-                    //res.status(201).send({ message: `Data Berhasil Ditambahkan, No Registrasi anda adalah = ${code}`, data})
-                    
-                    res.redirect("/daftar?id=" + data._id)
+          user
+              .save(user)
+              .then(data => {
+                  
+                  autoCode.updateMonthCode(moment().format('YYMM'),'FC')
+                  //res.status(201).send({ message: `Data Berhasil Ditambahkan, No Registrasi anda adalah = ${code}`, data})
+                  
+                  res.redirect("/daftar?id=" + data._id)
 
-                })
-                
-                .catch(err => {
-                    res.status(500).send({
-                        message: err.message || "some error"
-                    });
-                });
-        })
+              })
+              
+              .catch(err => {
+                  res.status(500).send({
+                      message: err.message || "some error"
+                  });
+              });
+      })
     },
     find(req, res) {
+        try {
+          const decoded = jwt.verify(req.session.token, jwtKey);
+        } catch (err) {
+          return res.status(401).send("Invalid Token");
+        }
         const limit = req.query.limit || 0;
         const offset = req.query.offset || 0;
         userdb.find().skip(offset).limit(limit)
@@ -153,7 +213,12 @@ module.exports = {
     },
 
     findById(req, res) {
-        console.log('id >>>', req.params.id)
+        try {
+          const decoded = jwt.verify(req.session.token, jwtKey);
+        } catch (err) {
+          return res.status(401).send("Invalid Token");
+        }
+
         userdb.findById(req.params.id).then(user => {
             res.send(user)
 
@@ -165,7 +230,11 @@ module.exports = {
     },
 
     findUserDoclink(req, res) {
-        console.log('email >>>', req.params.email)
+        try {
+          const decoded = jwt.verify(req.session.token, jwtKey);
+        } catch (err) {
+          return res.status(401).send("Invalid Token");
+        }
         fetch.fetchUrl(process.env.MAIN_API_URL + '/api/v1/account/get/pasien',
             {
                 method: 'POST',
@@ -183,6 +252,12 @@ module.exports = {
     },
 
     update(req, res) {
+        try {
+          const decoded = jwt.verify(req.session.token, jwtKey);
+        } catch (err) {
+          return res.status(401).send("Invalid Token");
+        }
+
         if (!req.body) {
             return res
                 .status(400)
@@ -191,7 +266,6 @@ module.exports = {
         const id = req.params.id;
 
         req.body.updatedby = req.session.username
-        console.log('data update', req.body)
 
         userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
@@ -204,6 +278,12 @@ module.exports = {
     },
 
     delete(req, res) {
+        try {
+          const decoded = jwt.verify(req.session.token, jwtKey);
+        } catch (err) {
+          return res.status(401).send("Invalid Token");
+        }
+        
         const id = req.params.id;
 
         userdb.findByIdAndDelete(id)
@@ -225,50 +305,53 @@ module.exports = {
 
     },
     loginPage(req, res) {
-
-        userModels.find({
-            email: req.body.email,
-            password: req.body.password
-        })
-            .then(data => {
-                console.log(req.body.email);
-                console.log(req.body.password);
-                if (req.body.email == data[0].email && req.body.password == data[0].password) {
-                    const username = data[0].username;
-                    // Create token
-                    const token = jwt.sign({username}, jwtKey, {
-                      algorithm: "HS256",
-		                  expiresIn: jwtExpirySeconds,
-
-                    });
-                    
-                    data.token = token;
-
+      userModels.find({
+          email: req.body.email,
+          password: req.body.password
+      })
+          .then(data => {
+              console.log(req.body.email);
+              console.log(req.body.password);
+              if (req.body.email == data[0].email && req.body.password == data[0].password) {
+                  const username = data[0].username;
+                  // Create token
+                  const token = jwt.sign({username}, jwtKey, {
+                    algorithm: "HS256",
+                    expiresIn: jwtExpirySeconds,
+                  });
+                  
+                  data.token = token;
+              
+                  session = req.session;
+                  session.isLogin = true;
+                  session.role = data[0].role;
+                  session.username = data[0].username;
+                  session.token = token;
+                  res.redirect('/');
+              }
                 
-                    session = req.session;
-                    session.isLogin = true;
-                    session.role = data[0].role;
-                    session.username = data[0].username;
-                    session.token = token;
-                    res.redirect('/');
-                }
-                 
 
-            })
-            .catch(error => {
-                res.send('Invalid email or password', error);
-            });
+          })
+          .catch(error => {
+              res.send('Invalid email or password', error);
+          });
     },
 
     register(req, res) {
-        userModels.insertMany(req.body)
-            .then(data => {
-                console.log(req.body)
-                res.redirect('/login')
-            })
-            .catch(error => {
-                res.status(400).send({ message: "email or password cannot be empty" });
-            })
+      try {
+        const decoded = jwt.verify(req.session.token, jwtKey);
+      } catch (err) {
+        return res.status(401).send("Invalid Token");
+      }
+
+      userModels.insertMany(req.body)
+          .then(data => {
+              console.log(req.body)
+              res.redirect('/login')
+          })
+          .catch(error => {
+              res.status(400).send({ message: "email or password cannot be empty" });
+          })
     },
 
     findByNoRegis(req, res) {
